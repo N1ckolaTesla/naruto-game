@@ -2,7 +2,7 @@ const canvas = document.getElementById('canvas');
 const ctx = canvas.getContext('2d');
 
 canvas.width = 800;
-canvas.height = 400;
+canvas.height = 600;
 
 class GameField {
   constructor(){
@@ -19,11 +19,12 @@ class Cube extends GameField {
     this.size = 50;
     this.x = this.canvasWidth / 2 - this.size / 2;
     this.y = 0;
-    this.speedY = 2;
+    this.speedY = 5;
   }
 
   draw() {
     this.ctx.fillStyle = 'blue';
+    console.log({w:this.size, h: this.size })
     this.ctx.fillRect(this.x, this.y, this.size, this.size);
   }
 
