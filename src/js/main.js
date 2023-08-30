@@ -7,11 +7,20 @@ class Game extends GameField {
       x: 200,
       y: this.canvasHeight,
       width: 40,
-      height: 80,
+      height: 60,
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === " ") {
         this.person.jump();
+      } else if (event.key === "ArrowLeft") {
+        this.person.moveDirection = -1;
+      } else if (event.key === "ArrowRight") {
+        this.person.moveDirection = 1;
+      }
+    });
+    document.addEventListener("keyup", (event) => {
+      if (event.key === "ArrowLeft" || event.key === "ArrowRight") {
+        this.person.stopMove();
       }
     });
   }

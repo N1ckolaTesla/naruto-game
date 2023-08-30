@@ -10,7 +10,22 @@ export class Person extends GameField {
     this.width = width;
     this.height = height;
     this.velocityY = 0;
+    this.velocityX = 0;
     this.isJumping = false;
+    this.moveDirection = 0;
+  }
+
+  move() {
+    if (this.moveDirection === 1) {
+      this.vectorUtils.personMoveRight(this);
+    }
+    if (this.moveDirection === -1) {
+      this.vectorUtils.personMoveLeft(this);
+    }
+  }
+  stopMove() {
+    this.moveDirection = 0;
+    this.velocityX = 0;
   }
 
   jump() {
@@ -21,6 +36,7 @@ export class Person extends GameField {
   }
   render() {
     this.vectorUtils.personJump(this);
+    this.move();
 
     this.ctx.fillStyle = "blue";
     this.ctx.fillRect(this.x, this.y, this.width, this.height);
