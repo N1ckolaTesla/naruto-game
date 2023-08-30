@@ -1,57 +1,27 @@
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-
-canvas.width = 800;
-canvas.height = 600;
-
-class GameField {
-  constructor(){
-    this.ctx = ctx;
-    this.canvas = canvas;
-    this.canvasHeight = canvas.height;
-    this.canvasWidth = canvas.width;
-  }
-}
-
-class Cube extends GameField {
-  constructor() {
-    super();
-    this.size = 50;
-    this.x = this.canvasWidth / 2 - this.size / 2;
-    this.y = 0;
-    this.speedY = 5;
-  }
-
-  draw() {
-    this.ctx.fillStyle = 'blue';
-    console.log({w:this.size, h: this.size })
-    this.ctx.fillRect(this.x, this.y, this.size, this.size);
-  }
-
-  update() {
-    this.y += this.speedY;
-
-    if (this.y > this.canvasHeight - this.size) {
-      this.y = this.canvasHeight - this.size;
-      this.speedY = 0;
-    }
-
-    this.draw();
-  }
-}
-
+import { GameField } from "./gameField";
+import { Person } from "./person";
 class Game extends GameField {
   constructor() {
     super();
-    this.cube = new Cube();
+    this.person = new Person({
+      x: 200,
+      y: this.canvasHeight,
+      width: 40,
+      height: 80,
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === " ") {
+        this.person.jump();
+      }
+    });
   }
 
   gameLoop() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    this.cube.update();
+    this.person.render();
     requestAnimationFrame(this.gameLoop.bind(this));
   }
 }
 
-const game = new Game(canvas, ctx);
+const game = new Game();
 game.gameLoop();
