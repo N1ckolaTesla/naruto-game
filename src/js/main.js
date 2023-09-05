@@ -1,9 +1,10 @@
 import { GameField } from "./gameField";
 import { Person } from "./person";
+import { Fighter } from "./fighter";
 class Game extends GameField {
   constructor() {
     super();
-    this.person = new Person({
+    this.person = new Fighter({
       position: {
         x: 200,
         y: this.canvasHeight
@@ -43,7 +44,7 @@ class Game extends GameField {
         }
       }
     });
-    this.enemy = new Person({
+    this.enemy = new Fighter({
       position: {
         x: 600,
         y: this.canvasHeight
@@ -172,8 +173,10 @@ class Game extends GameField {
 
   gameLoop() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
-    this.person.render();
-    this.enemy.render();
+    // this.person.render();
+    // this.enemy.render();
+    this.person.update()
+    this.enemy.update()
     this.person.switchSprite('idle')
     this.enemy.switchSprite('idle')
     //person movement
