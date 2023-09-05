@@ -50,6 +50,38 @@ class Game extends GameField {
       },
       width: 40,
       height: 60,
+      imageSrc: '../assets/imgs/enemy/Idle.png',
+      framesMax: 8,
+      sprites: {
+        idle: {
+          imageSrc: '../assets/imgs/enemy/Idle.png',
+          framesMax: 8
+        },
+        run: {
+            imageSrc: '../assets/imgs/enemy/Run.png',
+            framesMax: 8
+        },
+        jump: {
+            imageSrc: '../assets/imgs/enemy/Jump.png',
+            framesMax: 2
+        },
+        fall: {
+            imageSrc: '../assets/imgs/enemy/Fall.png',
+            framesMax: 2        
+        },
+        attack1: {
+            imageSrc: '../assets/imgs/enemy/Attack1.png',
+            framesMax: 6      
+        },
+        takeHit: {
+            imageSrc: '../assets/imgs/enemy/Take Hit.png',
+            framesMax: 4
+        },
+        death: {
+            imageSrc: '../assets/imgs/enemy/Death.png',
+            framesMax: 6
+        }
+      }
     });
     this.keys = {
       a: {
@@ -143,6 +175,7 @@ class Game extends GameField {
     this.person.render();
     this.enemy.render();
     this.person.switchSprite('idle')
+    this.enemy.switchSprite('idle')
     //person movement
     if (this.keys.ArrowLeft.pressed && this.person.lastKey === 'ArrowLeft') {
       this.person.moveDirection = -1
