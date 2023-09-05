@@ -1,28 +1,28 @@
 export class VectorUtils {
   personJump(person) {
-    person.y += person.velocityY;
-    person.velocityY += 0.5;
+    person.position.y += person.velocity.y;
+    person.velocity.y += 0.5;
 
-    if (person.y >= person.canvasHeight - person.height) {
-      person.y = person.canvasHeight - person.height;
+    if (person.position.y >= person.canvasHeight - person.height) {
+      person.position.y = person.canvasHeight - person.height;
       person.isJumping = false;
     }
   }
   personMoveLeft(person) {
-    person.velocityX = Math.max(person.velocityX - 0.5, -5);
-    person.x += person.velocityX;
+    person.velocity.x = Math.max(person.velocity.x - 0.5, -5);
+    person.position.x += person.velocity.x;
 
-    if (person.x <= 0) {
-      person.x = 0;
+    if (person.position.x <= 0) {
+      person.position.x = 0;
     }
   }
 
   personMoveRight(person) {
-    person.velocityX = Math.min(person.velocityX + 0.5, 5);
-    person.x += person.velocityX;
+    person.velocity.x = Math.min(person.velocity.x + 0.5, 5);
+    person.position.x += person.velocity.x;
 
-    if (person.x >= person.canvasWidth - person.width) {
-      person.x = person.canvasWidth - person.width;
+    if (person.position.x >= person.canvasWidth - person.width) {
+      person.position.x = person.canvasWidth - person.width;
     }
   }
 }

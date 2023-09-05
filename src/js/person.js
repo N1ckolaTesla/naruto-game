@@ -2,16 +2,15 @@ import { GameField } from "./gameField";
 import { VectorUtils } from "./utils/vectorUtils";
 
 export class Person extends GameField {
-  constructor({ width, height, x, y }) {
+  constructor({ position, width, height }) {
     super();
     this.vectorUtils = new VectorUtils();
-    this.x = x;
-    this.y = y;
+    this.position = position
     this.width = width;
     this.height = height;
-    this.velocityY = 0;
-    this.velocityX = 0;
+    this.velocity = {x: 0, y: 0}
     this.isJumping = false;
+    this.dead = false
     this.moveDirection = 0;
   }
 
@@ -25,12 +24,12 @@ export class Person extends GameField {
   }
   stopMove() {
     this.moveDirection = 0;
-    this.velocityX = 0;
+    this.velocity.x = 0;
   }
 
   jump() {
     if (!this.isJumping) {
-      this.velocityY = -10;
+      this.velocity.y = -13;
       this.isJumping = true;
     }
   }
@@ -39,6 +38,6 @@ export class Person extends GameField {
     this.move();
 
     this.ctx.fillStyle = "blue";
-    this.ctx.fillRect(this.x, this.y, this.width, this.height);
+    this.ctx.fillRect(this.position.x, this.position.y, this.width, this.height);
   }
 }
