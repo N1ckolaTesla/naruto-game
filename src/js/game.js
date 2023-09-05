@@ -238,8 +238,8 @@ const player = new Fighter({
         y: 0
     },
     imageSrc: '../assets/imgs/person/naruto-idle-right.png',
-    framesMax: 6,
-    scale: 2.5,
+    framesMax: 1,
+    scale: 1,
     offset: {
         x: 0,
         y: -48
@@ -247,7 +247,7 @@ const player = new Fighter({
     sprites: {
         idle: {
             imageSrc: '../assets/imgs/person/naruto-idle-right.png',
-            framesMax: 6
+            framesMax: 1
         },
         run: {
             imageSrc: '../assets/imgs/person/naruto-run-right.png',
