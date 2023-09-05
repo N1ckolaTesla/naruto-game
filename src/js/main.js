@@ -11,6 +11,14 @@ class Game extends GameField {
       width: 40,
       height: 60,
     });
+    this.enemy = new Person({
+      position: {
+        x: 600,
+        y: this.canvasHeight
+      },
+      width: 40,
+      height: 60,
+    });
     this.keys = {
       a: {
           pressed: false
@@ -49,6 +57,22 @@ class Game extends GameField {
             this.person.jump()
         }
       }
+      if (!this.enemy.dead) {
+        switch (e.key) {
+          case 'a':
+            this.keys.a.pressed = true
+            this.enemy.lastKey = 'a'
+            break
+          case 'd':
+            this.keys.d.pressed = true
+            this.enemy.lastKey = 'd'
+            break
+          case 'w':
+            this.keys.w.pressed = true
+            this.enemy.lastKey = 'w'
+            this.enemy.jump()
+        }
+      }
     });
     document.addEventListener("keyup", (e) => {
       switch (e.key) {
@@ -65,6 +89,19 @@ class Game extends GameField {
         case 'ArrowUp':
           this.keys.ArrowUp.pressed = false
           break
+        case 'a':
+          this.keys.a.pressed = false
+          if (this.enemy.lastKey === 'd') return 
+          this.enemy.stopMove()
+          break
+        case 'd':
+          this.keys.d.pressed = false
+          if (this.enemy.lastKey === 'a') return 
+          this.enemy.stopMove()
+          break
+        case 'w':
+          this.keys.w.pressed = false
+          break
       }
     });
   }
@@ -72,11 +109,18 @@ class Game extends GameField {
   gameLoop() {
     this.ctx.clearRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.person.render();
+    this.enemy.render();
     //person movement
     if (this.keys.ArrowLeft.pressed && this.person.lastKey === 'ArrowLeft') {
       this.person.moveDirection = -1
     } else if (this.keys.ArrowRight.pressed && this.person.lastKey === 'ArrowRight') {
       this.person.moveDirection = 1
+    }
+    //eney movement
+    if (this.keys.a.pressed && this.enemy.lastKey === 'a') {
+      this.enemy.moveDirection = -1
+    } else if (this.keys.d.pressed && this.enemy.lastKey === 'd') {
+      this.enemy.moveDirection = 1
     }
     requestAnimationFrame(this.gameLoop.bind(this));
   }
