@@ -237,21 +237,21 @@ const player = new Fighter({
         x: 0,
         y: 0
     },
-    imageSrc: '../assets/imgs/person/Idle.png',
-    framesMax: 8,
+    imageSrc: '../assets/imgs/person/naruto-idle-right.png',
+    framesMax: 6,
     scale: 2.5,
     offset: {
-        x: 215,
-        y: 157
+        x: 0,
+        y: -48
     },
     sprites: {
         idle: {
-            imageSrc: '../assets/imgs/person/Idle.png',
-            framesMax: 8
+            imageSrc: '../assets/imgs/person/naruto-idle-right.png',
+            framesMax: 6
         },
         run: {
-            imageSrc: '../assets/imgs/person/Run.png',
-            framesMax: 8
+            imageSrc: '../assets/imgs/person/naruto-run-right.png',
+            framesMax: 6
         },
         jump: {
             imageSrc: '../assets/imgs/person/Jump.png',
@@ -262,8 +262,8 @@ const player = new Fighter({
             framesMax: 2        
         },
         attack1: {
-            imageSrc: '../assets/imgs/person/Attack1.png',
-            framesMax: 6      
+            imageSrc: '../assets/imgs/person/naruto-hit-right.png',
+            framesMax: 13      
         },
         takeHit: {
             imageSrc: '../assets/imgs/person/Take Hit.png',
