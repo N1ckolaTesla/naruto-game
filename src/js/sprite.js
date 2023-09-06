@@ -13,6 +13,9 @@ export class Sprite {
         this.framesElapsed = 0
         this.framesHold = 5
         this.offset = offset
+        this.attackCount = 0
+        this.attackCountAvailable = 0
+        this.framesAttackElapsed = 0
     }
     draw() {
         ctx.drawImage(
@@ -29,6 +32,7 @@ export class Sprite {
     }
     animateFrames() {
         this.framesElapsed++
+        this.framesAttackElapsed++
         if (this.framesElapsed % this.framesHold === 0) {
             if (this.framesCurrent < this.framesMax - 1) {
                 this.framesCurrent++

@@ -45,6 +45,7 @@ export class Fighter extends Sprite {
             sprites[sprite].image.src = sprites[sprite].imageSrc
         }
         this.dead = false
+        this.attack3Available = false
     }
     update() {
         this.draw()
@@ -69,7 +70,42 @@ export class Fighter extends Sprite {
         }
     }
     attack() {
-        this.switchSprite('attack1')
+        if (this.framesCount % this.framesHold === 0) {
+            this.attackCountAvailable++
+        }
+        if (this.attackCountAvailable > this.attackCount) {
+            console.log(this.framesAttackElapsed / this.framesHold <= this.framesMax)
+            if (this.attackCountAvailable < 7) {
+                if (this.attackCountAvailable % 2 !== 0) {
+                    this.switchSprite('attack1')
+                    this.framesAttackElapsed = 0
+                    this.attack3Available = true
+                    setTimeout(() => {
+                        this.attackCount = 0
+                        this.attackCountAvailable = 0
+                        this.attack3Available = false
+                    }, 1000)
+                } else if (this.attackCountAvailable % 2 === 0) {
+                    this.switchSprite('attack2')
+                    this.framesAttackElapsed = 0
+                    this.attack3Available = true
+                    setTimeout(() => {
+                        this.attackCount = 0
+                        this.attackCountAvailable = 0
+                        this.attack3Available = false
+                    }, 1000)
+                }
+            } else if (
+                (this.attackCountAvailable >= 7 && this.attack3Available)
+            ) {
+                this.switchSprite('attack3')
+            } else {
+                this.switchSprite('attack1')
+                this.framesAttackElapsed = 0
+                this.attack3Available = true
+                setTimeout(() => this.attack3Available = false, 1000)
+            }
+        }
         this.isAttacking = true
     }
     takeHit() {
@@ -81,8 +117,12 @@ export class Fighter extends Sprite {
     switchSprite(sprite) {
         //override all other animations with the attack animation
         if (
-            this.image === this.sprites.attack1.image &&
-            this.framesCurrent < this.sprites.attack1.framesMax - 1
+            (this.image === this.sprites.attack1.image &&
+            this.framesCurrent < this.sprites.attack1.framesMax - 1) ||
+            (this.image === this.sprites.attack2.image &&
+            this.framesCurrent < this.sprites.attack2.framesMax - 1) ||
+            (this.image === this.sprites.attack3.image &&
+            this.framesCurrent < this.sprites.attack3.framesMax - 1)
         ) return
         //override when fighter gets hit
         if (
@@ -100,6 +140,7 @@ export class Fighter extends Sprite {
                     this.image = this.sprites.idle.image
                     this.framesMax = this.sprites.idle.framesMax
                     this.framesCurrent = 0
+                    this.framesMax = this.sprites.idle.framesMax
                 }
                 break
             case 'run':
@@ -107,6 +148,7 @@ export class Fighter extends Sprite {
                     this.image = this.sprites.run.image
                     this.framesMax = this.sprites.run.framesMax
                     this.framesCurrent = 0
+                    this.framesMax = this.sprites.run.framesMax
                 }
                 break
             case 'jump':
@@ -114,6 +156,7 @@ export class Fighter extends Sprite {
                     this.image = this.sprites.jump.image
                     this.framesMax = this.sprites.jump.framesMax
                     this.framesCurrent = 0
+                    this.framesMax = this.sprites.jump.framesMax
                 }
                 break
             case 'fall':
@@ -121,6 +164,7 @@ export class Fighter extends Sprite {
                     this.image = this.sprites.fall.image
                     this.framesMax = this.sprites.fall.framesMax
                     this.framesCurrent = 0
+                    this.framesMax = this.sprites.fall.framesMax
                 }
                 break
             case 'attack1':
@@ -128,6 +172,27 @@ export class Fighter extends Sprite {
                     this.image = this.sprites.attack1.image
                     this.framesMax = this.sprites.attack1.framesMax
                     this.framesCurrent = 0
+                    this.framesMax = this.sprites.attack1.framesMax
+                    this.attackCount++
+                }
+                break
+            case 'attack2':
+                if (this.image !== this.sprites.attack2.image) {
+                    this.image = this.sprites.attack2.image
+                    this.framesMax = this.sprites.attack2.framesMax
+                    this.framesCurrent = 0
+                    this.framesMax = this.sprites.attack2.framesMax
+                    this.attackCount++
+                }
+                break
+            case 'attack3':
+                if (this.image !== this.sprites.attack3.image) {
+                    this.image = this.sprites.attack3.image
+                    this.framesMax = this.sprites.attack3.framesMax
+                    this.framesCurrent = 0
+                    this.framesMax = this.sprites.attack3.framesMax
+                    this.attackCount = 0
+                    this.attackCountAvailable = 0
                 }
                 break
             case 'takeHit':
@@ -135,6 +200,7 @@ export class Fighter extends Sprite {
                     this.image = this.sprites.takeHit.image
                     this.framesMax = this.sprites.takeHit.framesMax
                     this.framesCurrent = 0
+                    this.framesMax = this.sprites.takeHit.framesMax
                 }
                 break
             case 'death':
@@ -142,6 +208,7 @@ export class Fighter extends Sprite {
                     this.image = this.sprites.death.image
                     this.framesMax = this.sprites.death.framesMax
                     this.framesCurrent = 0
+                    this.framesMax = this.sprites.death.framesMax
                 }
                 break
         }

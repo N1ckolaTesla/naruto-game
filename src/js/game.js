@@ -262,8 +262,16 @@ const player = new Fighter({
             framesMax: 2        
         },
         attack1: {
+            imageSrc: '../assets/imgs/person/Attack1.png',
+            framesMax: 6      
+        },
+        attack2: {
+            imageSrc: '../assets/imgs/person/Attack2.png',
+            framesMax: 6
+        },
+        attack3: {
             imageSrc: '../assets/imgs/person/naruto-hit-right.png',
-            framesMax: 13      
+            framesMax: 13
         },
         takeHit: {
             imageSrc: '../assets/imgs/person/Take Hit.png',
@@ -319,6 +327,14 @@ const enemy = new Fighter({
         attack1: {
             imageSrc: '../assets/imgs/enemy/Attack1.png',
             framesMax: 4    
+        },
+        attack2: {
+            imageSrc: '../assets/imgs/enemy/Attack2.png',
+            framesMax: 4
+        },
+        attack3: {
+            imageSrc: '../assets/imgs/person/naruto-hit-right.png',
+            framesMax: 13
         },
         takeHit: {
             imageSrc: '../assets/imgs/enemy/Take Hit.png',
@@ -488,6 +504,7 @@ window.addEventListener('keydown', (e) => {
                 player.velocity.y = -20
                 break
             case ' ': 
+                player.attackCountAvailable++
                 player.attack()
                 break
         }
@@ -506,6 +523,7 @@ window.addEventListener('keydown', (e) => {
                 enemy.velocity.y = -20
                 break
             case 'ArrowDown':
+                enemy.attackCountAvailable++
                 enemy.attack()
                 break
         }
