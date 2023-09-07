@@ -166,6 +166,14 @@ export class Fighter extends Sprite {
                     this.framesMax = this.sprites.idle.framesMax
                 }
                 break
+            case 'walk':
+                if (this.image !== this.sprites.walk.image) {
+                    this.image = this.sprites.walk.image
+                    this.framesMax = this.sprites.walk.framesMax
+                    this.framesCurrent = 0
+                    this.framesMax = this.sprites.walk.framesMax
+                }
+                break
             case 'run':
                 if (this.image !== this.sprites.run.image) {
                     this.image = this.sprites.run.image

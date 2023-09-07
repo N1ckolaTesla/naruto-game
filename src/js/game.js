@@ -231,20 +231,24 @@ const player = new Fighter({
         y: 0
     },
     imageSrc: '../assets/imgs/person/naruto-idle-right.png',
-    framesMax: 1,
-    scale: 1,
+    framesMax: 6,
+    scale: 2,
     offset: {
         x: 0,
-        y: -48
+        y: -31
     },
     sprites: {
         idle: {
             imageSrc: '../assets/imgs/person/naruto-idle-right.png',
-            framesMax: 1
+            framesMax: 6
+        },
+        walk: {
+            imageSrc: '../assets/imgs/person/naruto-walk-right.png',
+            framesMax: 6
         },
         run: {
-            imageSrc: '../assets/imgs/person/n-run-right.png',
-            framesMax: 7
+            imageSrc: '../assets/imgs/person/naruto-run-right.png',
+            framesMax: 6
         },
         jump: {
             imageSrc: '../assets/imgs/person/Jump.png',
@@ -308,6 +312,10 @@ const enemy = new Fighter({
         idle: {
             imageSrc: '../assets/imgs/enemy/Idle.png',
             framesMax: 4
+        },
+        walk: {
+            imageSrc: '../assets/imgs/person/naruto-walk-right.png',
+            framesMax: 6
         },
         run: {
             imageSrc: '../assets/imgs/enemy/Run.png',
@@ -418,17 +426,19 @@ function animate() {
     if (keys.a.pressed && player.lastKey === 'a') {
         if (player.isRunningLeft) {
             player.velocity.x = -10
+            player.switchSprite('run')
         } else if (!player.isRunningLeft) {
-            player.velocity.x = -5
+            player.velocity.x = -4
+            player.switchSprite('walk')
         }
-        player.switchSprite('run')
     } else if (keys.d.pressed && player.lastKey === 'd') {
         if (player.isRunningRight) {
             player.velocity.x = 10
+            player.switchSprite('run')
         } else if (!player.isRunningRight) {
-            player.velocity.x = 5
+            player.velocity.x = 4
+            player.switchSprite('walk')
         }
-        player.switchSprite('run')
     } else {
         player.switchSprite('idle')
     }
