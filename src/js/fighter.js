@@ -137,7 +137,7 @@ export class Fighter extends Sprite {
             (this.image === this.sprites.attack3.image &&
             this.framesCurrent < this.sprites.attack3.framesMax - 1) ||
             (this.image === this.sprites.attackFlying.image &&
-            this.framesCurrent < this.sprites.attackFlying.framesMax - 1)
+            this.velocity.y !== 0)
         ) return
         //override when fighter gets hit
         if (

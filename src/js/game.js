@@ -532,7 +532,7 @@ window.addEventListener('keydown', (e) => {
                 }
                 break
             case 'w':
-                player.velocity.y = -20
+                if (player.velocity.y === 0) player.velocity.y = -20
                 break
             case ' ': 
                 player.attackCountAvailable++
@@ -565,7 +565,7 @@ window.addEventListener('keydown', (e) => {
                 }
                 break
             case 'ArrowUp':
-                enemy.velocity.y = -20
+                if (enemy.velocity.y === 0) enemy.velocity.y = -20
                 break
             case 'ArrowDown':
                 enemy.attackCountAvailable++
