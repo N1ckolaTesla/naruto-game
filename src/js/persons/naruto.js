@@ -36,8 +36,8 @@ export const personNaruto = {
             framesMax: 2        
         },
         attack1: {
-            imageSrc: '../assets/imgs/person/Attack1.png',
-            framesMax: 6      
+            imageSrc: '../assets/imgs/person/naruto-attack1-right.png',
+            framesMax: 4
         },
         attack2: {
             imageSrc: '../assets/imgs/person/Attack2.png',
