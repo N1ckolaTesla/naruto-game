@@ -12,12 +12,6 @@ export class Fighter extends Sprite {
         offset = {x: 0, y: 0},
         sprites,
         attackBox = { offset: {}, width: undefined, height: undefined },
-        readyToRunRight = false,
-        readyToRunLeft = false,
-        readyToRunRightTimeout,
-        readyToRunLeftTimeout,
-        isRunningRight = false,
-        isRunningLeft = false
     }) {
         super({
             position,
@@ -52,6 +46,12 @@ export class Fighter extends Sprite {
         }
         this.dead = false
         this.attack3Available = false
+        this.readyToRunRight = false,
+        this.readyToRunLeft = false,
+        this.readyToRunRightTimeout,
+        this.readyToRunLeftTimeout,
+        this.isRunningRight = false,
+        this.isRunningLeft = false
     }
     update() {
         this.draw()
