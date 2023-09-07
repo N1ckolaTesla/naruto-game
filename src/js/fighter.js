@@ -1,5 +1,5 @@
+import { GameConstants } from "./gameConstants"
 import { Sprite } from "./sprite"
-import { canvas, gravity } from "./game"
 
 export class Fighter extends Sprite {
     constructor({
@@ -62,11 +62,11 @@ export class Fighter extends Sprite {
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
         
-        if (this.position.y + this.height + this.velocity.y >= canvas.height - 96) {
+        if (this.position.y + this.height + this.velocity.y >= this.canvasHeight - 96) {
             this.velocity.y = 0
             this.position.y = 330
         } else {
-            this.velocity.y += gravity 
+            this.velocity.y += this.gravity 
         }
     }
     attack() {

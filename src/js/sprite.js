@@ -1,7 +1,7 @@
-import { ctx } from "./game"
-
-export class Sprite {
+import { GameConstants } from "./gameConstants"
+export class Sprite extends GameConstants {
     constructor({ position, imageSrc, scale = 1, framesMax = 1, offset = {x: 0, y: 0} }) {
+        super()
         this.position = position
         this.width = 50
         this.height = 150
@@ -18,7 +18,7 @@ export class Sprite {
         this.framesAttackElapsed = 0
     }
     draw() {
-        ctx.drawImage(
+        this.ctx.drawImage(
             this.image,
             this.framesCurrent * (this.image.width / this.framesMax),
             0,

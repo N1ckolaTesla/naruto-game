@@ -1,16 +1,9 @@
+import { GameConstants } from "./gameConstants"
 import { Sprite } from "./sprite"
 import { Fighter } from "./fighter"
-import { decreaseTimer, rectangularCollision, determineWinner, timer, timerId } from "./utils"
+import { decreaseTimer, rectangularCollision, determineWinner, timerId } from "./utils"
 
-export const canvas = document.querySelector('canvas')
-export const ctx = canvas.getContext('2d')
-
-canvas.width = 1024
-canvas.height = 576
-
-ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-export const gravity = 0.7
+const gameConstants = new GameConstants()
 
 const background1 = new Sprite({
     position: {
@@ -384,8 +377,8 @@ decreaseTimer()
 
 function animate() {
     window.requestAnimationFrame(animate)
-    ctx.fillStyle = 'black'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    gameConstants.ctx.fillStyle = 'black'
+    gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight)
     background1.update()
     background2.update()
     background3.update()
@@ -404,8 +397,8 @@ function animate() {
     grass2_2.update()
     grass3_1.update()
     grass3_2.update()
-    ctx.fillStyle = 'rgba(255, 255, 255, .15)'
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    gameConstants.ctx.fillStyle = 'rgba(255, 255, 255, .15)'
+    gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight)
     player.update()
     enemy.update()
 
