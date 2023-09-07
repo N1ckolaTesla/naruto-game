@@ -76,9 +76,12 @@ export class Fighter extends Sprite {
         }
     }
     attack() {
-        console.log(this.velocity.y)
         if (this.velocity.y !== 0) {
             this.attackFlying()
+            return
+        }
+        if (this.isRunningLeft || this.isRunningRight) {
+            this.switchSprite('attack3')
             return
         }
         if (this.framesCount % this.framesHold === 0) {
@@ -138,7 +141,11 @@ export class Fighter extends Sprite {
             this.framesCurrent < this.sprites.attack3.framesMax - 1) ||
             (this.image === this.sprites.attackFlying.image &&
             this.velocity.y !== 0)
-        ) return
+        ) {
+            this.isRunningLeft = false
+            this.isRunningRight = false
+            return
+        }
         //override when fighter gets hit
         if (
             this.image === this.sprites.takeHit.image &&
