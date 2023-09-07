@@ -52,6 +52,7 @@ export class Fighter extends Sprite {
         this.readyToRunLeftTimeout,
         this.isRunningRight = false,
         this.isRunningLeft = false
+        this.velocityXFlying = 0
     }
     update() {
         this.draw()

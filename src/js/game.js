@@ -433,8 +433,10 @@ function animate() {
         player.switchSprite('idle')
     }
     if (player.velocity.y < 0) {
+        player.velocity.x = player.velocityXFlying
         player.switchSprite('jump')
     } else if (player.velocity.y > 0) {
+        player.velocity.x = player.velocityXFlying
         player.switchSprite('fall')
     }
 
@@ -457,8 +459,10 @@ function animate() {
         enemy.switchSprite('idle')
     }
     if (enemy.velocity.y < 0) {
+        enemy.velocity.x = enemy.velocityXFlying
         enemy.switchSprite('jump')
     } else if (enemy.velocity.y > 0) {
+        enemy.velocity.x = enemy.velocityXFlying
         enemy.switchSprite('fall')
     }
     //detect for collision & enemy gets hit
@@ -532,7 +536,10 @@ window.addEventListener('keydown', (e) => {
                 }
                 break
             case 'w':
-                if (player.velocity.y === 0) player.velocity.y = -20
+                if (player.velocity.y === 0) {
+                    player.velocity.y = -20
+                    player.velocityXFlying = player.velocity.x
+                }
                 break
             case ' ': 
                 player.attackCountAvailable++
@@ -565,7 +572,10 @@ window.addEventListener('keydown', (e) => {
                 }
                 break
             case 'ArrowUp':
-                if (enemy.velocity.y === 0) enemy.velocity.y = -20
+                if (enemy.velocity.y === 0) {
+                    enemy.velocity.y = -20
+                    enemy.velocityXFlying = enemy.velocity.x
+                }
                 break
             case 'ArrowDown':
                 enemy.attackCountAvailable++
