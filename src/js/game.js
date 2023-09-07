@@ -1,643 +1,180 @@
-import { GameConstants } from "./gameConstants"
-import { Sprite } from "./sprite"
-import { Fighter } from "./fighter"
-import { decreaseTimer, rectangularCollision, determineWinner, timerId } from "./utils"
+import { GameConstants } from "./gameConstants";
+import { Fighter } from "./fighter";
+import { decreaseTimer, rectangularCollision, determineWinner, timerId } from "./utils";
+import { gameObjects } from "./sprites/gameObjects";
+import { personNaruto } from "./persons/naruto";
+import { personSaski } from "./persons/saski";
+import { keyDownListener } from "./controllers/keyDown";
+import { keyUpListener } from "./controllers/keyUp";
 
-const gameConstants = new GameConstants()
+const gameConstants = new GameConstants();
 
-const background1 = new Sprite({
-    position: {
-        x: 0,
-        y: 0
-    },
-    imageSrc: '../assets/imgs/background/background_layer_1.png',
-    scale: 3.2
-})
-const background2 = new Sprite({
-    position: {
-        x: 0,
-        y: 0
-    },
-    imageSrc: '../assets/imgs/background/background_layer_2.png',
-    scale: 3.2
-})
-const background3 = new Sprite({
-    position: {
-        x: 0,
-        y: 0
-    },
-    imageSrc: '../assets/imgs/background/background_layer_3.png',
-    scale: 3.2
-})
-const shop = new Sprite({
-    position: {
-        x: 600,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/shop_anim.png',
-    scale: 2.75,
-    framesMax: 6
-})
-const ground = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/oak_woods_tileset.png',
-    scale: 2,
-    framesMax: 1,
-    offset: {
-        x: 0,
-        y: -350
+class Game extends GameConstants {
+    constructor() {
+        super();
+        decreaseTimer();
+        this.player1 = new Fighter(personNaruto);
+        this.player2 = new Fighter(personSaski);
+        this.player1.draw();
+        this.player2.draw();
+        this.keys = {
+            a: {
+                pressed: false
+            },
+            d: {
+                pressed: false
+            },
+            w: {
+                pressed: false
+            },
+            ArrowLeft: {
+                pressed: false
+            },
+            ArrowRight: {
+                pressed: false
+            },
+            ArrowUp: {
+                pressed: false
+            }
+        };
+        document.addEventListener('keydown', keyDownListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
+        document.addEventListener('keyup', keyUpListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
     }
-})
-const fence1 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/fence_1.png',
-    scale: 2,
-    framesMax: 1,
-    offset: {
-        x: -450,
-        y: -312
-    }
-})
-const fence2 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/fence_2.png',
-    scale: 2,
-    framesMax: 1,
-    offset: {
-        x: -920,
-        y: -312
-    }
-})
-const lamp = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/lamp.png',
-    scale: 2,
-    framesMax: 1,
-    offset: {
-        x: -400,
-        y: -237
-    }
-})
-const rock1 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/rock_1.png',
-    scale: 2,
-    framesMax: 1,
-    offset: {
-        x: -50,
-        y: -328
-    }
-})
-const rock2 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/rock_2.png',
-    scale: 2,
-    framesMax: 1,
-    offset: {
-        x: -300,
-        y: -327
-    }
-})
-const rock3 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/rock_3.png',
-    scale: 2,
-    framesMax: 1,
-    offset: {
-        x: -170,
-        y: -313
-    }
-})
-const sign = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/sign.png',
-    scale: 3,
-    framesMax: 1,
-    offset: {
-        x: -930,
-        y: -259
-    }
-})
-const grass1_1 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/grass_1.png',
-    scale: 3,
-    framesMax: 1,
-    offset: {
-        x: -830,
-        y: -341
-    }
-})
-const grass1_2 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/grass_1.png',
-    scale: 3,
-    framesMax: 1,
-    offset: {
-        x: -430,
-        y: -342
-    }
-})
-const grass2_1 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/grass_2.png',
-    scale: 3,
-    framesMax: 1,
-    offset: {
-        x: -340,
-        y: -336
-    }
-})
-const grass2_2 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/grass_2.png',
-    scale: 3,
-    framesMax: 1,
-    offset: {
-        x: -140,
-        y: -336
-    }
-})
-const grass3_1 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/grass_3.png',
-    scale: 3,
-    framesMax: 1,
-    offset: {
-        x: -270,
-        y: -338
-    }
-})
-const grass3_2 = new Sprite({
-    position: {
-        x: 0,
-        y: 128
-    },
-    imageSrc: '../assets/imgs/decorations/grass_3.png',
-    scale: 3,
-    framesMax: 1,
-    offset: {
-        x: -520,
-        y: -338
-    }
-})
 
-const player = new Fighter({
-    position: {
-        x: 300,
-        y: 0
-    }, 
-    velocity: {
-        x: 0,
-        y: 0
-    },
-    imageSrc: '../assets/imgs/person/naruto-idle-right.png',
-    framesMax: 6,
-    scale: 2,
-    offset: {
-        x: 0,
-        y: -31
-    },
-    sprites: {
-        idle: {
-            imageSrc: '../assets/imgs/person/naruto-idle-right.png',
-            framesMax: 6
-        },
-        walk: {
-            imageSrc: '../assets/imgs/person/naruto-walk-right.png',
-            framesMax: 6
-        },
-        run: {
-            imageSrc: '../assets/imgs/person/naruto-run-right.png',
-            framesMax: 6
-        },
-        jump: {
-            imageSrc: '../assets/imgs/person/Jump.png',
-            framesMax: 2
-        },
-        fall: {
-            imageSrc: '../assets/imgs/person/Fall.png',
-            framesMax: 2        
-        },
-        attack1: {
-            imageSrc: '../assets/imgs/person/Attack1.png',
-            framesMax: 6      
-        },
-        attack2: {
-            imageSrc: '../assets/imgs/person/Attack2.png',
-            framesMax: 6
-        },
-        attack3: {
-            imageSrc: '../assets/imgs/person/naruto-hit-right.png',
-            framesMax: 13
-        },
-        attackFlying: {
-            imageSrc: '../assets/imgs/person/n-attack2-right.png',
-            framesMax: 2
-        },
-        takeHit: {
-            imageSrc: '../assets/imgs/person/Take Hit.png',
-            framesMax: 4
-        },
-        death: {
-            imageSrc: '../assets/imgs/person/Death.png',
-            framesMax: 6
+    animate() {
+        gameConstants.ctx.fillStyle = 'black';
+        gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight);
+
+        gameObjects.forEach(sprite => sprite.update());
+        gameConstants.ctx.fillStyle = 'rgba(255, 255, 255, .15)';
+        gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight);
+
+        this.player1.update();
+        this.player2.update();
+
+        this.player1.velocity.x = 0;
+        this.player2.velocity.x = 0;
+
+        // this.player1 movement
+        if (this.keys.a.pressed && this.player1.lastKey === 'a') {
+            if (this.player1.isRunningLeft) {
+                this.player1.velocity.x = -10;
+                this.player1.switchSprite('run');
+            } else if (!this.player1.isRunningLeft) {
+                this.player1.velocity.x = -4;
+                this.player1.switchSprite('walk');
+            }
+        } else if (this.keys.d.pressed && this.player1.lastKey === 'd') {
+            if (this.player1.isRunningRight) {
+                this.player1.velocity.x = 10;
+                this.player1.switchSprite('run');
+            } else if (!this.player1.isRunningRight) {
+                this.player1.velocity.x = 4;
+                this.player1.switchSprite('walk');
+            }
+        } else {
+            this.player1.switchSprite('idle');
         }
-    },
-    attackBox: {
-        offset: {
-            x: 100,
-            y: 50
-        },
-        width: 160,
-        height: 50
-    }
-})
-const enemy = new Fighter({
-    position: {
-        x: 682,
-        y: 100
-    },
-    velocity: {
-        x: 0,
-        y: 0
-    },
-    imageSrc: '../assets/imgs/enemy/Idle.png',
-    framesMax: 4,
-    scale: 2.5,
-    offset: {
-        x: 215,
-        y: 172
-    },
-    sprites: {
-        idle: {
-            imageSrc: '../assets/imgs/enemy/Idle.png',
-            framesMax: 4
-        },
-        walk: {
-            imageSrc: '../assets/imgs/person/naruto-walk-right.png',
-            framesMax: 6
-        },
-        run: {
-            imageSrc: '../assets/imgs/enemy/Run.png',
-            framesMax: 8
-        },
-        jump: {
-            imageSrc: '../assets/imgs/enemy/Jump.png',
-            framesMax: 2
-        },
-        fall: {
-            imageSrc: '../assets/imgs/enemy/Fall.png',
-            framesMax: 2        
-        },
-        attack1: {
-            imageSrc: '../assets/imgs/enemy/Attack1.png',
-            framesMax: 4    
-        },
-        attack2: {
-            imageSrc: '../assets/imgs/enemy/Attack2.png',
-            framesMax: 4
-        },
-        attack3: {
-            imageSrc: '../assets/imgs/person/naruto-hit-right.png',
-            framesMax: 13
-        },
-        attackFlying: {
-            imageSrc: '../assets/imgs/person/n-attack2-right.png',
-            framesMax: 2
-        },
-        takeHit: {
-            imageSrc: '../assets/imgs/enemy/Take Hit.png',
-            framesMax: 3
-        },
-        death: {
-            imageSrc: '../assets/imgs/enemy/Death.png',
-            framesMax: 7
+        if (this.player1.velocity.y < 0) {
+            this.player1.velocity.x = this.player1.velocityXFlying;
+            this.player1.switchSprite('jump');
+        } else if (this.player1.velocity.y > 0) {
+            this.player1.velocity.x = this.player1.velocityXFlying;
+            this.player1.switchSprite('fall');
         }
-    },
-    attackBox: {
-        offset: {
-            x: -170,
-            y: 50
-        },
-        width: 170,
-        height: 50
-    },
-    facingRight: false
-})
 
-player.draw()
-enemy.draw()
+        // this.player2 movement
+        if (this.keys.ArrowLeft.pressed && this.player2.lastKey === 'ArrowLeft') {
+            if (this.player2.isRunningLeft) {
+                this.player2.velocity.x = -10;
+            } else if (!this.player2.isRunningLeft) {
+                this.player2.velocity.x = -5;
+            }
+            this.player2.switchSprite('run');
+        } else if (this.keys.ArrowRight.pressed && this.player2.lastKey === 'ArrowRight') {
+            if (this.player2.isRunningRight) {
+                this.player2.velocity.x = 10;
+            } else if (!this.player2.isRunningRight) {
+                this.player2.velocity.x = 5;
+            }
+            this.player2.switchSprite('run');
+        } else {
+            this.player2.switchSprite('idle');
+        }
+        if (this.player2.velocity.y < 0) {
+            this.player2.velocity.x = this.player2.velocityXFlying;
+            this.player2.switchSprite('jump');
+        } else if (this.player2.velocity.y > 0) {
+            this.player2.velocity.x = this.player2.velocityXFlying;
+            this.player2.switchSprite('fall');
+        }
 
-const keys = {
-    a: {
-        pressed: false
-    },
-    d: {
-        pressed: false
-    },
-    w: {
-        pressed: false
-    },
-    ArrowLeft: {
-        pressed: false
-    }, 
-    ArrowRight: {
-        pressed: false
-    },
-    ArrowUp: {
-        pressed: false
+        // Detect for collision & this.player2 gets hit
+        if (
+            rectangularCollision({
+                rectangle1: this.player1,
+                rectangle2: this.player2
+            }) &&
+            this.player1.isAttacking &&
+            this.player1.framesCurrent === 4
+        ) {
+            this.player2.takeHit();
+            this.player1.isAttacking = false;
+            renderHealth('player2Health', this.player2.health);
+        }
+        // If this.player1 misses
+        if (this.player1.isAttacking && this.player1.framesCurrent === 4) {
+            this.player1.isAttacking = false;
+        }
+        // Detect for collison & this.player1 gets hit
+        if (
+            rectangularCollision({
+                rectangle1: this.player2,
+                rectangle2: this.player1
+            }) &&
+            this.player2.isAttacking &&
+            this.player2.framesCurrent === 2
+        ) {
+            this.player1.takeHit();
+            this.player2.isAttacking = false;
+            renderHealth('playerHealth', this.player1.health);
+        }
+        // If this.player2 misses
+        if (this.player2.isAttacking && this.player2.framesCurrent === 2) {
+            this.player2.isAttacking = false;
+        }
+        // End game based on health
+        if (this.player1.health <= 0 || this.player2.health <= 0) {
+            determineWinner({ player: this.player1, enemy: this.player2, timerId });
+            if (this.player1.health <= 0) {
+                this.player1.switchSprite('death');
+            } else if (this.player2.health <= 0) {
+                this.player2.switchSprite('death');
+            }
+        }
+
+        requestAnimationFrame(this.animate.bind(this)); // Use bind(this) to maintain the correct context
+    }
+    removeListeners() {
+        document.removeEventListener('keydown', keyDownListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
+        document.removeEventListener('keyup', keyUpListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
     }
 }
 
-decreaseTimer()
+let game = new Game();
 
-function animate() {
-    window.requestAnimationFrame(animate)
-    gameConstants.ctx.fillStyle = 'black'
-    gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight)
-    background1.update()
-    background2.update()
-    background3.update()
-    shop.update()
-    ground.update()
-    fence1.update()
-    fence2.update()
-    lamp.update()
-    rock1.update()
-    rock2.update()
-    rock3.update()
-    sign.update()
-    grass1_1.update()
-    grass1_2.update()
-    grass2_1.update()
-    grass2_2.update()
-    grass3_1.update()
-    grass3_2.update()
-    gameConstants.ctx.fillStyle = 'rgba(255, 255, 255, .15)'
-    gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight)
-    player.update()
-    enemy.update()
-
-    player.velocity.x = 0
-    enemy.velocity.x = 0
-    
-
-    //player movement
-    if (keys.a.pressed && player.lastKey === 'a') {
-        if (player.isRunningLeft) {
-            player.velocity.x = -10
-            player.switchSprite('run')
-        } else if (!player.isRunningLeft) {
-            player.velocity.x = -4
-            player.switchSprite('walk')
-        }
-    } else if (keys.d.pressed && player.lastKey === 'd') {
-        if (player.isRunningRight) {
-            player.velocity.x = 10
-            player.switchSprite('run')
-        } else if (!player.isRunningRight) {
-            player.velocity.x = 4
-            player.switchSprite('walk')
-        }
-    } else {
-        player.switchSprite('idle')
+const newGame = () => {
+    if(game){
+        game.removeListeners()
     }
-    if (player.velocity.y < 0) {
-        player.velocity.x = player.velocityXFlying
-        player.switchSprite('jump')
-    } else if (player.velocity.y > 0) {
-        player.velocity.x = player.velocityXFlying
-        player.switchSprite('fall')
-    }
-
-    //enemy movement
-    if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-        if (enemy.isRunningLeft) {
-            enemy.velocity.x = -10
-        } else if (!enemy.isRunningLeft) {
-            enemy.velocity.x = -5
-        }
-        enemy.switchSprite('run')
-    } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-        if (enemy.isRunningRight) {
-            enemy.velocity.x = 10
-        } else if (!enemy.isRunningRight) {
-            enemy.velocity.x = 5
-        }
-        enemy.switchSprite('run')
-    } else {
-        enemy.switchSprite('idle')
-    }
-    if (enemy.velocity.y < 0) {
-        enemy.velocity.x = enemy.velocityXFlying
-        enemy.switchSprite('jump')
-    } else if (enemy.velocity.y > 0) {
-        enemy.velocity.x = enemy.velocityXFlying
-        enemy.switchSprite('fall')
-    }
-    //detect for collision & enemy gets hit
-    if (
-        rectangularCollision({
-            rectangle1: player,
-            rectangle2: enemy
-        }) && 
-        player.isAttacking &&
-        player.framesCurrent === 4
-    ) {
-        enemy.takeHit()
-        player.isAttacking = false
-        gsap.to('#enemyHealth', {width: enemy.health + '%'})
-    } //if player misses
-    if (player.isAttacking && player.framesCurrent === 4) {
-        player.isAttacking = false
-    }
-    //detect for collison & player gets hit
-    if (
-        rectangularCollision({
-            rectangle1: enemy,
-            rectangle2: player
-        }) && 
-        enemy.isAttacking &&
-        enemy.framesCurrent === 2
-    ) {
-        player.takeHit()
-        enemy.isAttacking = false
-        gsap.to('#playerHealth', {width: player.health + '%'})
-    } //if enemy misses
-    if (enemy.isAttacking && enemy.framesCurrent === 2) {
-        enemy.isAttacking = false
-    }
-    // end game based on health
-    if (player.health <= 0 || enemy.health <= 0) {
-        determineWinner({player, enemy, timerId})
-        if (player.health <= 0) {
-            player.switchSprite('death')
-        } else if (enemy.health <= 0) {
-            enemy.switchSprite('death')
-        }
-    }
+    game = new Game();
+    game.animate();
 }
 
-animate()
+newGame()
 
-window.addEventListener('keydown', (e) => {
-    if (!player.dead) {
-        switch (e.key) {
-            case 'd':
-                keys.d.pressed = true
-                player.lastKey = 'd'
-                if (player.readyToRunRight) {
-                    if (player.readyToRunRightTimeout) {
-                        clearTimeout(player.readyToRunRightTimeout)
-                    }
-                    player.readyToRunRight = true
-                    player.isRunningRight = true
-                }
-                break
-            case 'a':
-                keys.a.pressed = true
-                player.lastKey = 'a'
-                if (player.readyToRunLeft) {
-                    if (player.readyToRunLeftTimeout) {
-                        clearTimeout(player.readyToRunLeftTimeout)
-                    }
-                    player.readyToRunLeft = true
-                    player.isRunningLeft = true
-                }
-                break
-            case 'w':
-                if (player.velocity.y === 0) {
-                    player.velocity.y = -20
-                    player.velocityXFlying = player.velocity.x
-                }
-                break
-            case ' ': 
-                player.attackCountAvailable++
-                player.attack()
-                break
-        }
-    }
-    if (!enemy.dead) {
-        switch (e.key) {
-            case 'ArrowRight':
-                keys.ArrowRight.pressed = true
-                enemy.lastKey = 'ArrowRight'
-                if (enemy.readyToRunRight) {
-                    if (enemy.readyToRunRightTimeout) {
-                        clearTimeout(enemy.readyToRunRightTimeout)
-                    }
-                    enemy.readyToRunRight = true
-                    enemy.isRunningRight = true
-                }
-                break
-            case 'ArrowLeft':
-                keys.ArrowLeft.pressed = true
-                enemy.lastKey = 'ArrowLeft'
-                if (enemy.readyToRunLeft) {
-                    if (enemy.readyToRunLeftTimeout) {
-                        clearTimeout(enemy.readyToRunLeftTimeout)
-                    }
-                    enemy.readyToRunLeft = true
-                    enemy.isRunningLeft = true
-                }
-                break
-            case 'ArrowUp':
-                if (enemy.velocity.y === 0) {
-                    enemy.velocity.y = -20
-                    enemy.velocityXFlying = enemy.velocity.x
-                }
-                break
-            case 'ArrowDown':
-                enemy.attackCountAvailable++
-                enemy.attack()
-                break
-        }
-    }
-})
 
-window.addEventListener('keyup', (e) => {
-    switch (e.key) {
-        case 'd':
-            keys.d.pressed = false
-            player.readyToRunRight = true
-            player.readyToRunRightTimeout = setTimeout(() => player.readyToRunRight = false, 500)
-            if (player.readyToRunRight && player.isRunningRight) {
-                player.readyToRunRight = false
-                player.isRunningRight = false
-            }
-            break
-        case 'a':
-            keys.a.pressed = false
-            player.readyToRunLeft = true
-            player.readyToRunLeftTimeout = setTimeout(() => player.readyToRunLeft = false, 500)
-            if (player.readyToRunLeft && player.isRunningLeft) {
-                player.readyToRunLeft = false
-                player.isRunningLeft = false
-            }
-            break
-        case 'w':
-            keys.w.pressed = false
-            break
-        case 'ArrowRight':
-            keys.ArrowRight.pressed = false
-            enemy.readyToRunRight = true
-            enemy.readyToRunRightTimeout = setTimeout(() => enemy.readyToRunRight = false, 500)
-            if (enemy.readyToRunRight && enemy.isRunningRight) {
-                enemy.readyToRunRight = false
-                enemy.isRunningRight = false
-            }
-            break
-        case 'ArrowLeft':
-            keys.ArrowLeft.pressed = false
-            enemy.readyToRunLeft = true
-            enemy.readyToRunLeftTimeout = setTimeout(() => enemy.readyToRunLeft = false, 500)
-            if (enemy.readyToRunLeft && enemy.isRunningLeft) {
-                enemy.readyToRunLeft = false
-                enemy.isRunningLeft = false
-            }
-            break
-        case 'ArrowUp':
-            keys.ArrowUp.pressed = false
-            break
-    }
-})
+const renderHealth = (id , health) => {
+       const element = document.getElementById(id)
+       element.style.width = `${health}%`
+}
