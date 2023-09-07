@@ -243,8 +243,8 @@ const player = new Fighter({
             framesMax: 1
         },
         run: {
-            imageSrc: '../assets/imgs/person/naruto-run-right.png',
-            framesMax: 6
+            imageSrc: '../assets/imgs/person/n-run-right.png',
+            framesMax: 7
         },
         jump: {
             imageSrc: '../assets/imgs/person/Jump.png',
@@ -408,10 +408,18 @@ function animate() {
 
     //player movement
     if (keys.a.pressed && player.lastKey === 'a') {
-        player.velocity.x = -5
+        if (player.isRunningLeft) {
+            player.velocity.x = -10
+        } else if (!player.isRunningLeft) {
+            player.velocity.x = -5
+        }
         player.switchSprite('run')
     } else if (keys.d.pressed && player.lastKey === 'd') {
-        player.velocity.x = 5
+        if (player.isRunningRight) {
+            player.velocity.x = 10
+        } else if (!player.isRunningRight) {
+            player.velocity.x = 5
+        }
         player.switchSprite('run')
     } else {
         player.switchSprite('idle')
@@ -424,10 +432,18 @@ function animate() {
 
     //enemy movement
     if (keys.ArrowLeft.pressed && enemy.lastKey === 'ArrowLeft') {
-        enemy.velocity.x = -5
+        if (enemy.isRunningLeft) {
+            enemy.velocity.x = -10
+        } else if (!enemy.isRunningLeft) {
+            enemy.velocity.x = -5
+        }
         enemy.switchSprite('run')
     } else if (keys.ArrowRight.pressed && enemy.lastKey === 'ArrowRight') {
-        enemy.velocity.x = 5
+        if (enemy.isRunningRight) {
+            enemy.velocity.x = 10
+        } else if (!enemy.isRunningRight) {
+            enemy.velocity.x = 5
+        }
         enemy.switchSprite('run')
     } else {
         enemy.switchSprite('idle')
@@ -488,10 +504,24 @@ window.addEventListener('keydown', (e) => {
             case 'd':
                 keys.d.pressed = true
                 player.lastKey = 'd'
+                if (player.readyToRunRight) {
+                    if (player.readyToRunRightTimeout) {
+                        clearTimeout(player.readyToRunRightTimeout)
+                    }
+                    player.readyToRunRight = true
+                    player.isRunningRight = true
+                }
                 break
             case 'a':
                 keys.a.pressed = true
                 player.lastKey = 'a'
+                if (player.readyToRunLeft) {
+                    if (player.readyToRunLeftTimeout) {
+                        clearTimeout(player.readyToRunLeftTimeout)
+                    }
+                    player.readyToRunLeft = true
+                    player.isRunningLeft = true
+                }
                 break
             case 'w':
                 player.velocity.y = -20
@@ -507,10 +537,24 @@ window.addEventListener('keydown', (e) => {
             case 'ArrowRight':
                 keys.ArrowRight.pressed = true
                 enemy.lastKey = 'ArrowRight'
+                if (enemy.readyToRunRight) {
+                    if (enemy.readyToRunRightTimeout) {
+                        clearTimeout(enemy.readyToRunRightTimeout)
+                    }
+                    enemy.readyToRunRight = true
+                    enemy.isRunningRight = true
+                }
                 break
             case 'ArrowLeft':
                 keys.ArrowLeft.pressed = true
                 enemy.lastKey = 'ArrowLeft'
+                if (enemy.readyToRunLeft) {
+                    if (enemy.readyToRunLeftTimeout) {
+                        clearTimeout(enemy.readyToRunLeftTimeout)
+                    }
+                    enemy.readyToRunLeft = true
+                    enemy.isRunningLeft = true
+                }
                 break
             case 'ArrowUp':
                 enemy.velocity.y = -20
@@ -527,18 +571,42 @@ window.addEventListener('keyup', (e) => {
     switch (e.key) {
         case 'd':
             keys.d.pressed = false
+            player.readyToRunRight = true
+            player.readyToRunRightTimeout = setTimeout(() => player.readyToRunRight = false, 500)
+            if (player.readyToRunRight && player.isRunningRight) {
+                player.readyToRunRight = false
+                player.isRunningRight = false
+            }
             break
         case 'a':
             keys.a.pressed = false
+            player.readyToRunLeft = true
+            player.readyToRunLeftTimeout = setTimeout(() => player.readyToRunLeft = false, 500)
+            if (player.readyToRunLeft && player.isRunningLeft) {
+                player.readyToRunLeft = false
+                player.isRunningLeft = false
+            }
             break
         case 'w':
             keys.w.pressed = false
             break
         case 'ArrowRight':
             keys.ArrowRight.pressed = false
+            enemy.readyToRunRight = true
+            enemy.readyToRunRightTimeout = setTimeout(() => enemy.readyToRunRight = false, 500)
+            if (enemy.readyToRunRight && enemy.isRunningRight) {
+                enemy.readyToRunRight = false
+                enemy.isRunningRight = false
+            }
             break
         case 'ArrowLeft':
             keys.ArrowLeft.pressed = false
+            enemy.readyToRunLeft = true
+            enemy.readyToRunLeftTimeout = setTimeout(() => enemy.readyToRunLeft = false, 500)
+            if (enemy.readyToRunLeft && enemy.isRunningLeft) {
+                enemy.readyToRunLeft = false
+                enemy.isRunningLeft = false
+            }
             break
         case 'ArrowUp':
             keys.ArrowUp.pressed = false

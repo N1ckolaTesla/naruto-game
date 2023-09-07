@@ -11,7 +11,13 @@ export class Fighter extends Sprite {
         framesMax = 1,
         offset = {x: 0, y: 0},
         sprites,
-        attackBox = { offset: {}, width: undefined, height: undefined }
+        attackBox = { offset: {}, width: undefined, height: undefined },
+        readyToRunRight = false,
+        readyToRunLeft = false,
+        readyToRunRightTimeout,
+        readyToRunLeftTimeout,
+        isRunningRight = false,
+        isRunningLeft = false
     }) {
         super({
             position,
