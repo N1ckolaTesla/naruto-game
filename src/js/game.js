@@ -266,6 +266,10 @@ const player = new Fighter({
             imageSrc: '../assets/imgs/person/naruto-hit-right.png',
             framesMax: 13
         },
+        attackFlying: {
+            imageSrc: '../assets/imgs/person/n-attack2-right.png',
+            framesMax: 2
+        },
         takeHit: {
             imageSrc: '../assets/imgs/person/Take Hit.png',
             framesMax: 4
@@ -328,6 +332,10 @@ const enemy = new Fighter({
         attack3: {
             imageSrc: '../assets/imgs/person/naruto-hit-right.png',
             framesMax: 13
+        },
+        attackFlying: {
+            imageSrc: '../assets/imgs/person/n-attack2-right.png',
+            framesMax: 2
         },
         takeHit: {
             imageSrc: '../assets/imgs/enemy/Take Hit.png',

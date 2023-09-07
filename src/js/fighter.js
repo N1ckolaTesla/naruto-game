@@ -76,11 +76,15 @@ export class Fighter extends Sprite {
         }
     }
     attack() {
+        console.log(this.velocity.y)
+        if (this.velocity.y !== 0) {
+            this.attackFlying()
+            return
+        }
         if (this.framesCount % this.framesHold === 0) {
             this.attackCountAvailable++
         }
         if (this.attackCountAvailable > this.attackCount) {
-            console.log(this.framesAttackElapsed / this.framesHold <= this.framesMax)
             if (this.attackCountAvailable < 7) {
                 if (this.attackCountAvailable % 2 !== 0) {
                     this.switchSprite('attack1')
@@ -114,6 +118,9 @@ export class Fighter extends Sprite {
         }
         this.isAttacking = true
     }
+    attackFlying() {
+        this.switchSprite('attackFlying')
+    }
     takeHit() {
         this.health -= 20
         if (this.health <= 0) {
@@ -128,7 +135,9 @@ export class Fighter extends Sprite {
             (this.image === this.sprites.attack2.image &&
             this.framesCurrent < this.sprites.attack2.framesMax - 1) ||
             (this.image === this.sprites.attack3.image &&
-            this.framesCurrent < this.sprites.attack3.framesMax - 1)
+            this.framesCurrent < this.sprites.attack3.framesMax - 1) ||
+            (this.image === this.sprites.attackFlying.image &&
+            this.framesCurrent < this.sprites.attackFlying.framesMax - 1)
         ) return
         //override when fighter gets hit
         if (
@@ -199,6 +208,14 @@ export class Fighter extends Sprite {
                     this.framesMax = this.sprites.attack3.framesMax
                     this.attackCount = 0
                     this.attackCountAvailable = 0
+                }
+                break
+            case 'attackFlying':
+                if (this.image !== this.sprites.attackFlying.image) {
+                    this.image = this.sprites.attackFlying.image
+                    this.framesMax = this.sprites.attackFlying.framesMax
+                    this.framesCurrent = 0
+                    this.framesMax = this.sprites.attackFlying.framesMax
                 }
                 break
             case 'takeHit':
