@@ -1,4 +1,3 @@
-import { GameConstants } from "./gameConstants"
 import { Sprite } from "./sprite"
 
 export class Fighter extends Sprite {

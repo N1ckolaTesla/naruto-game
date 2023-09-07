@@ -120,7 +120,7 @@ class Game extends GameConstants {
         ) {
             this.player2.takeHit();
             this.player1.isAttacking = false;
-            renderHealth('player2Health', this.player2.health);
+            renderHealth('enemyHealth', this.player2.health);
         }
         // If this.player1 misses
         if (this.player1.isAttacking && this.player1.framesCurrent === 4) {
@@ -161,7 +161,7 @@ class Game extends GameConstants {
     }
 }
 
-let game = new Game();
+let game;
 
 const newGame = () => {
     if(game){
