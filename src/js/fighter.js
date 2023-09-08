@@ -88,13 +88,13 @@ export class Fighter extends Sprite {
         if (!this.dead) this.animateFrames()
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y + this.attackBox.offset.y
-        // draw the attack box
-        // c.fillRect(
-        //     this.attackBox.position.x,
-        //     this.attackBox.position.y,
-        //     this.attackBox.width,
-        //     this.attackBox.height
-        // )
+        //draw the attack box
+        this.ctx.fillRect(
+            this.attackBox.position.x,
+            this.attackBox.position.y,
+            this.attackBox.width,
+            this.attackBox.height
+        )
         this.position.x += this.velocity.x
         this.position.y += this.velocity.y
         

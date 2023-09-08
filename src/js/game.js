@@ -3,7 +3,7 @@ import { Fighter } from "./fighter";
 import { decreaseTimer, rectangularCollision, determineWinner, timerId } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
-import { personSasuke } from "./persons/saski";
+import { personSasuke } from "./persons/sasuke";
 import { keyDownListener } from "./controllers/keyDown";
 import { keyUpListener } from "./controllers/keyUp";
 
@@ -87,17 +87,19 @@ class Game extends GameConstants {
         if (this.keys.ArrowLeft.pressed && this.player2.lastKey === 'ArrowLeft') {
             if (this.player2.isRunningLeft) {
                 this.player2.velocity.x = -10;
+                this.player2.switchSprite('run');
             } else if (!this.player2.isRunningLeft) {
                 this.player2.velocity.x = -5;
+                this.player2.switchSprite('walk');
             }
-            this.player2.switchSprite('run');
         } else if (this.keys.ArrowRight.pressed && this.player2.lastKey === 'ArrowRight') {
             if (this.player2.isRunningRight) {
                 this.player2.velocity.x = 10;
+                this.player2.switchSprite('run');
             } else if (!this.player2.isRunningRight) {
                 this.player2.velocity.x = 5;
+                this.player2.switchSprite('walk');
             }
-            this.player2.switchSprite('run');
         } else {
             this.player2.switchSprite('idle');
         }

@@ -110,11 +110,10 @@ export const personSasuke = {
     },
     attackBox: {
         offset: {
-            x: -170,
-            y: 50
+            x: 100,
+            y: 70
         },
-        width: 170,
-        height: 50
-    },
-    facingRight: false
+        width: 30,
+        height: 10
+    }
 }
