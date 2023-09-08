@@ -140,7 +140,7 @@ export class Fighter extends Sprite {
             (this.image === this.sprites.attack3.image &&
             this.framesCurrent < this.sprites.attack3.framesMax - 1) ||
             (this.image === this.sprites.attackFlying.image &&
-            this.velocity.y !== 0)
+            this.framesCurrent < this.sprites.attackFlying.framesMax - 1)
         ) {
             this.isRunningLeft = false
             this.isRunningRight = false
@@ -155,6 +155,11 @@ export class Fighter extends Sprite {
         if (this.image === this.sprites.death.image) {
             if (this.framesCurrent === this.sprites.death.framesMax - 1) this.dead = true 
             return
+        }
+        if (this.velocity.y < 0 && sprite !== 'attackFlying') {
+            sprite = 'jump'
+        } else if (this.velocity > 0 && sprite !== 'attackFlying') {
+            sprite = 'fall'
         }
         switch(sprite) {
             case 'idle':

@@ -37,8 +37,8 @@ class Game extends GameConstants {
                 pressed: false
             }
         };
-        document.addEventListener('keydown', keyDownListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
-        document.addEventListener('keyup', keyUpListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
+        document.addEventListener('keydown', keyDownListener({keys: this.keys, enemy: this.player2, player: this.player1})); 
+        document.addEventListener('keyup', keyUpListener({keys: this.keys, enemy: this.player2, player: this.player1})); 
     }
 
     animate() {

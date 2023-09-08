@@ -48,7 +48,7 @@ export const personSaski = {
             framesMax: 13
         },
         attackFlying: {
-            imageSrc: '../assets/imgs/person/n-attack2-right.png',
+            imageSrc: '../assets/imgs/person/naruto-attack-jump-right.png',
             framesMax: 2
         },
         takeHit: {
