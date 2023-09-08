@@ -109,6 +109,9 @@ class Game extends GameConstants {
             this.player2.switchSprite('fall');
         }
 
+        // turn players
+        this.player1.turnSprites(this.player1, this.player2)
+
         // Detect for collision & this.player2 gets hit
         if (
             rectangularCollision({

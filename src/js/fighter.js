@@ -58,17 +58,33 @@ export class Fighter extends Sprite {
         this.isRunningLeft = false
         this.velocityXFlying = 0
     }
-    changeSprites(direction) {
-        if (direction < 0) {
-            this.activeSprites = this.sprites.left
-        }
-        if (direction >= 0) {
-            this.activeSprites = this.sprites.right
+    turnSprites(player1, player2) {
+        if (player1.position.x >= player2.position.x) {
+            if (player1.velocity.x <= 0) {
+                player1.activeSprites = player1.sprites.left
+            } else if (player1.velocity.x > 0) {
+                player1.activeSprites = player1.sprites.right
+            }
+            if (player2.velocity.x < 0) {
+                player2.activeSprites = player2.sprites.left
+            } else if (player2.velocity.x >= 0) {
+                player2.activeSprites = player2.sprites.right
+            }
+        } else if (player1.position.x < player2.position.x) {
+            if (player2.velocity.x <= 0) {
+                player2.activeSprites = player2.sprites.left
+            } else if (player2.velocity.x > 0) {
+                player2.activeSprites = player2.sprites.right
+            }
+            if (player1.velocity.x < 0) {
+                player1.activeSprites = player1.sprites.left
+            } else if (player1.velocity.x >= 0) {
+                player1.activeSprites = player1.sprites.right
+            }
         }
     }
     update() {
         this.draw()
-        this.changeSprites(this.velocity.x)
         if (!this.dead) this.animateFrames()
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y + this.attackBox.offset.y
