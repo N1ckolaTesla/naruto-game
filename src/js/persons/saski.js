@@ -1,4 +1,4 @@
-export const personSaski = {
+export const personSasuke = {
     position: {
         x: 682,
         y: 100
@@ -9,10 +9,10 @@ export const personSaski = {
     },
     imageSrc: '../assets/imgs/enemy/Idle.png',
     framesMax: 4,
-    scale: 2.5,
+    scale: 2,
     offset: {
-        x: 215,
-        y: 172
+        x: 0,
+        y: -31
     },
     sprites: {
         right: {

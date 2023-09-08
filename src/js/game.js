@@ -3,7 +3,7 @@ import { Fighter } from "./fighter";
 import { decreaseTimer, rectangularCollision, determineWinner, timerId } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
-import { personSaski } from "./persons/saski";
+import { personSasuke } from "./persons/saski";
 import { keyDownListener } from "./controllers/keyDown";
 import { keyUpListener } from "./controllers/keyUp";
 
@@ -14,7 +14,7 @@ class Game extends GameConstants {
         super();
         decreaseTimer();
         this.player1 = new Fighter(personNaruto);
-        this.player2 = new Fighter(personSaski);
+        this.player2 = new Fighter(personSasuke);
         this.player1.draw();
         this.player2.draw();
         this.keys = {
