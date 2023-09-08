@@ -15,49 +15,97 @@ export const personSaski = {
         y: 172
     },
     sprites: {
-        idle: {
-            imageSrc: '../assets/imgs/enemy/Idle.png',
-            framesMax: 4
+        right: {
+            idle: {
+                imageSrc: '../assets/imgs/person/naruto-idle-right.png',
+                framesMax: 6
+            },
+            walk: {
+                imageSrc: '../assets/imgs/person/naruto-walk-right.png',
+                framesMax: 6
+            },
+            run: {
+                imageSrc: '../assets/imgs/person/naruto-run-right.png',
+                framesMax: 6
+            },
+            jump: {
+                imageSrc: '../assets/imgs/person/naruto-jump-right.png',
+                framesMax: 2
+            },
+            fall: {
+                imageSrc: '../assets/imgs/person/naruto-fall-right.png',
+                framesMax: 2        
+            },
+            attack1: {
+                imageSrc: '../assets/imgs/person/naruto-attack1-right.png',
+                framesMax: 4
+            },
+            attack2: {
+                imageSrc: '../assets/imgs/person/naruto-attack2-right.png',
+                framesMax: 4
+            },
+            attack3: {
+                imageSrc: '../assets/imgs/person/naruto-attack3-right.png',
+                framesMax: 4
+            },
+            attackFlying: {
+                imageSrc: '../assets/imgs/person/naruto-attack-jump-right.png',
+                framesMax: 4
+            },
+            takeHit: {
+                imageSrc: '../assets/imgs/person/naruto-hit-right.png',
+                framesMax: 2
+            },
+            death: {
+                imageSrc: '../assets/imgs/person/naruto-death-right.png',
+                framesMax: 3
+            }
         },
-        walk: {
-            imageSrc: '../assets/imgs/person/naruto-walk-right.png',
-            framesMax: 6
-        },
-        run: {
-            imageSrc: '../assets/imgs/enemy/Run.png',
-            framesMax: 8
-        },
-        jump: {
-            imageSrc: '../assets/imgs/enemy/Jump.png',
-            framesMax: 2
-        },
-        fall: {
-            imageSrc: '../assets/imgs/enemy/Fall.png',
-            framesMax: 2        
-        },
-        attack1: {
-            imageSrc: '../assets/imgs/enemy/Attack1.png',
-            framesMax: 4    
-        },
-        attack2: {
-            imageSrc: '../assets/imgs/enemy/Attack2.png',
-            framesMax: 4
-        },
-        attack3: {
-            imageSrc: '../assets/imgs/person/naruto-hit-right.png',
-            framesMax: 13
-        },
-        attackFlying: {
-            imageSrc: '../assets/imgs/person/naruto-attack-jump-right.png',
-            framesMax: 2
-        },
-        takeHit: {
-            imageSrc: '../assets/imgs/enemy/Take Hit.png',
-            framesMax: 3
-        },
-        death: {
-            imageSrc: '../assets/imgs/enemy/Death.png',
-            framesMax: 7
+        left: {
+            idle: {
+                imageSrc: '../assets/imgs/person/naruto-idle-left.png',
+                framesMax: 6
+            },
+            walk: {
+                imageSrc: '../assets/imgs/person/naruto-walk-left.png',
+                framesMax: 6
+            },
+            run: {
+                imageSrc: '../assets/imgs/person/naruto-run-left.png',
+                framesMax: 6
+            },
+            jump: {
+                imageSrc: '../assets/imgs/person/naruto-jump-left.png',
+                framesMax: 2
+            },
+            fall: {
+                imageSrc: '../assets/imgs/person/naruto-fall-left.png',
+                framesMax: 2        
+            },
+            attack1: {
+                imageSrc: '../assets/imgs/person/naruto-attack1-left.png',
+                framesMax: 4
+            },
+            attack2: {
+                imageSrc: '../assets/imgs/person/naruto-attack2-left.png',
+                framesMax: 4
+            },
+            attack3: {
+                imageSrc: '../assets/imgs/person/naruto-attack3-left.png',
+                framesMax: 4
+            },
+            attackFlying: {
+                imageSrc: '../assets/imgs/person/naruto-attack-jump-left.png',
+                framesMax: 4
+            },
+            takeHit: {
+                imageSrc: '../assets/imgs/person/naruto-hit-left.png',
+                framesMax: 2
+            },
+            death: {
+                imageSrc: '../assets/imgs/person/naruto-death-left.png',
+                framesMax: 3
+            }
         }
     },
     attackBox: {

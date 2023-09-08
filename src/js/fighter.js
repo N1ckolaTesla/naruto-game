@@ -39,9 +39,14 @@ export class Fighter extends Sprite {
         this.framesElapsed = 0
         this.framesHold = 5
         this.sprites = sprites
-        for (const sprite in sprites) {
-            sprites[sprite].image = new Image()
-            sprites[sprite].image.src = sprites[sprite].imageSrc
+        this.activeSprites = this.sprites.right
+        for (const sprite in this.activeSprites) {
+            this.activeSprites[sprite].image = new Image()
+            this.activeSprites[sprite].image.src = this.activeSprites[sprite].imageSrc
+        }
+        for (const sprite in this.sprites.left) {
+            this.sprites.left[sprite].image = new Image()
+            this.sprites.left[sprite].image.src = this.sprites.left[sprite].imageSrc
         }
         this.dead = false
         this.attack3Available = false
@@ -53,8 +58,17 @@ export class Fighter extends Sprite {
         this.isRunningLeft = false
         this.velocityXFlying = 0
     }
+    changeSprites(direction) {
+        if (direction < 0) {
+            this.activeSprites = this.sprites.left
+        }
+        if (direction >= 0) {
+            this.activeSprites = this.sprites.right
+        }
+    }
     update() {
         this.draw()
+        this.changeSprites(this.velocity.x)
         if (!this.dead) this.animateFrames()
         this.attackBox.position.x = this.position.x + this.attackBox.offset.x
         this.attackBox.position.y = this.position.y + this.attackBox.offset.y
@@ -133,14 +147,14 @@ export class Fighter extends Sprite {
     switchSprite(sprite) {
         //override all other animations with the attack animation
         if (
-            (this.image === this.sprites.attack1.image &&
-            this.framesCurrent < this.sprites.attack1.framesMax - 1) ||
-            (this.image === this.sprites.attack2.image &&
-            this.framesCurrent < this.sprites.attack2.framesMax - 1) ||
-            (this.image === this.sprites.attack3.image &&
-            this.framesCurrent < this.sprites.attack3.framesMax - 1) ||
-            (this.image === this.sprites.attackFlying.image &&
-            this.framesCurrent < this.sprites.attackFlying.framesMax - 1)
+            (this.image === this.activeSprites.attack1.image &&
+            this.framesCurrent < this.activeSprites.attack1.framesMax - 1) ||
+            (this.image === this.activeSprites.attack2.image &&
+            this.framesCurrent < this.activeSprites.attack2.framesMax - 1) ||
+            (this.image === this.activeSprites.attack3.image &&
+            this.framesCurrent < this.activeSprites.attack3.framesMax - 1) ||
+            (this.image === this.activeSprites.attackFlying.image &&
+            this.framesCurrent < this.activeSprites.attackFlying.framesMax - 1)
         ) {
             this.isRunningLeft = false
             this.isRunningRight = false
@@ -148,12 +162,12 @@ export class Fighter extends Sprite {
         }
         //override when fighter gets hit
         if (
-            this.image === this.sprites.takeHit.image &&
-            this.framesCurrent < this.sprites.takeHit.framesMax - 1
+            this.image === this.activeSprites.takeHit.image &&
+            this.framesCurrent < this.activeSprites.takeHit.framesMax - 1
         ) 
         return
-        if (this.image === this.sprites.death.image) {
-            if (this.framesCurrent === this.sprites.death.framesMax - 1) this.dead = true 
+        if (this.image === this.activeSprites.death.image) {
+            if (this.framesCurrent === this.activeSprites.death.framesMax - 1) this.dead = true 
             return
         }
         if (this.velocity.y < 0 && sprite !== 'attackFlying') {
@@ -163,95 +177,95 @@ export class Fighter extends Sprite {
         }
         switch(sprite) {
             case 'idle':
-                if (this.image !== this.sprites.idle.image) {
-                    this.image = this.sprites.idle.image
-                    this.framesMax = this.sprites.idle.framesMax
+                if (this.image !== this.activeSprites.idle.image) {
+                    this.image = this.activeSprites.idle.image
+                    this.framesMax = this.activeSprites.idle.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.idle.framesMax
+                    this.framesMax = this.activeSprites.idle.framesMax
                 }
                 break
             case 'walk':
-                if (this.image !== this.sprites.walk.image) {
-                    this.image = this.sprites.walk.image
-                    this.framesMax = this.sprites.walk.framesMax
+                if (this.image !== this.activeSprites.walk.image) {
+                    this.image = this.activeSprites.walk.image
+                    this.framesMax = this.activeSprites.walk.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.walk.framesMax
+                    this.framesMax = this.activeSprites.walk.framesMax
                 }
                 break
             case 'run':
-                if (this.image !== this.sprites.run.image) {
-                    this.image = this.sprites.run.image
-                    this.framesMax = this.sprites.run.framesMax
+                if (this.image !== this.activeSprites.run.image) {
+                    this.image = this.activeSprites.run.image
+                    this.framesMax = this.activeSprites.run.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.run.framesMax
+                    this.framesMax = this.activeSprites.run.framesMax
                 }
                 break
             case 'jump':
-                if (this.image !== this.sprites.jump.image) {
-                    this.image = this.sprites.jump.image
-                    this.framesMax = this.sprites.jump.framesMax
+                if (this.image !== this.activeSprites.jump.image) {
+                    this.image = this.activeSprites.jump.image
+                    this.framesMax = this.activeSprites.jump.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.jump.framesMax
+                    this.framesMax = this.activeSprites.jump.framesMax
                 }
                 break
             case 'fall':
-                if (this.image !== this.sprites.fall.image) {
-                    this.image = this.sprites.fall.image
-                    this.framesMax = this.sprites.fall.framesMax
+                if (this.image !== this.activeSprites.fall.image) {
+                    this.image = this.activeSprites.fall.image
+                    this.framesMax = this.activeSprites.fall.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.fall.framesMax
+                    this.framesMax = this.activeSprites.fall.framesMax
                 }
                 break
             case 'attack1':
-                if (this.image !== this.sprites.attack1.image) {
-                    this.image = this.sprites.attack1.image
-                    this.framesMax = this.sprites.attack1.framesMax
+                if (this.image !== this.activeSprites.attack1.image) {
+                    this.image = this.activeSprites.attack1.image
+                    this.framesMax = this.activeSprites.attack1.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.attack1.framesMax
+                    this.framesMax = this.activeSprites.attack1.framesMax
                     this.attackCount++
                 }
                 break
             case 'attack2':
-                if (this.image !== this.sprites.attack2.image) {
-                    this.image = this.sprites.attack2.image
-                    this.framesMax = this.sprites.attack2.framesMax
+                if (this.image !== this.activeSprites.attack2.image) {
+                    this.image = this.activeSprites.attack2.image
+                    this.framesMax = this.activeSprites.attack2.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.attack2.framesMax
+                    this.framesMax = this.activeSprites.attack2.framesMax
                     this.attackCount++
                 }
                 break
             case 'attack3':
-                if (this.image !== this.sprites.attack3.image) {
-                    this.image = this.sprites.attack3.image
-                    this.framesMax = this.sprites.attack3.framesMax
+                if (this.image !== this.activeSprites.attack3.image) {
+                    this.image = this.activeSprites.attack3.image
+                    this.framesMax = this.activeSprites.attack3.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.attack3.framesMax
+                    this.framesMax = this.activeSprites.attack3.framesMax
                     this.attackCount = 0
                     this.attackCountAvailable = 0
                 }
                 break
             case 'attackFlying':
-                if (this.image !== this.sprites.attackFlying.image) {
-                    this.image = this.sprites.attackFlying.image
-                    this.framesMax = this.sprites.attackFlying.framesMax
+                if (this.image !== this.activeSprites.attackFlying.image) {
+                    this.image = this.activeSprites.attackFlying.image
+                    this.framesMax = this.activeSprites.attackFlying.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.attackFlying.framesMax
+                    this.framesMax = this.activeSprites.attackFlying.framesMax
                 }
                 break
             case 'takeHit':
-                if (this.image !== this.sprites.takeHit.image) {
-                    this.image = this.sprites.takeHit.image
-                    this.framesMax = this.sprites.takeHit.framesMax
+                if (this.image !== this.activeSprites.takeHit.image) {
+                    this.image = this.activeSprites.takeHit.image
+                    this.framesMax = this.activeSprites.takeHit.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.takeHit.framesMax
+                    this.framesMax = this.activeSprites.takeHit.framesMax
                 }
                 break
             case 'death':
-                if (this.image !== this.sprites.death.image) {
-                    this.image = this.sprites.death.image
-                    this.framesMax = this.sprites.death.framesMax
+                if (this.image !== this.activeSprites.death.image) {
+                    this.image = this.activeSprites.death.image
+                    this.framesMax = this.activeSprites.death.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.sprites.death.framesMax
+                    this.framesMax = this.activeSprites.death.framesMax
                 }
                 break
         }
