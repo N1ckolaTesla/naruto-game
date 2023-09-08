@@ -56,7 +56,7 @@ class Game extends GameConstants {
         this.player2.velocity.x = 0;
 
         // this.player1 movement
-        if (this.keys.a.pressed && this.player1.lastKey === 'a') {
+        if (this.keys.a.pressed && this.player1.lastKey === 'a' && !this.player1.dead) {
             if (this.player1.isRunningLeft) {
                 this.player1.velocity.x = -10;
                 this.player1.switchSprite('run');
@@ -64,7 +64,7 @@ class Game extends GameConstants {
                 this.player1.velocity.x = -4;
                 this.player1.switchSprite('walk');
             }
-        } else if (this.keys.d.pressed && this.player1.lastKey === 'd') {
+        } else if (this.keys.d.pressed && this.player1.lastKey === 'd' && !this.player1.dead) {
             if (this.player1.isRunningRight) {
                 this.player1.velocity.x = 10;
                 this.player1.switchSprite('run');
@@ -84,7 +84,7 @@ class Game extends GameConstants {
         }
 
         // this.player2 movement
-        if (this.keys.ArrowLeft.pressed && this.player2.lastKey === 'ArrowLeft') {
+        if (this.keys.ArrowLeft.pressed && this.player2.lastKey === 'ArrowLeft' && !this.player2.dead) {
             if (this.player2.isRunningLeft) {
                 this.player2.velocity.x = -10;
                 this.player2.switchSprite('run');
@@ -92,7 +92,7 @@ class Game extends GameConstants {
                 this.player2.velocity.x = -5;
                 this.player2.switchSprite('walk');
             }
-        } else if (this.keys.ArrowRight.pressed && this.player2.lastKey === 'ArrowRight') {
+        } else if (this.keys.ArrowRight.pressed && this.player2.lastKey === 'ArrowRight' && !this.player2.dead) {
             if (this.player2.isRunningRight) {
                 this.player2.velocity.x = 10;
                 this.player2.switchSprite('run');
@@ -111,8 +111,8 @@ class Game extends GameConstants {
             this.player2.switchSprite('fall');
         }
 
-        // turn players
-        this.player1.turnSprites(this.player1, this.player2)
+        // turn fighters
+        this.player1.turnFighters(this.player1, this.player2)
 
         // Detect for collision & this.player2 gets hit
         if (
@@ -121,7 +121,7 @@ class Game extends GameConstants {
                 rectangle2: this.player2
             }) &&
             this.player1.isAttacking &&
-            this.player1.framesCurrent === 4
+            this.player1.framesCurrent === 2
         ) {
             this.player2.takeHit();
             this.player1.isAttacking = false;

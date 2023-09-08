@@ -58,27 +58,27 @@ export class Fighter extends Sprite {
         this.isRunningLeft = false
         this.velocityXFlying = 0
     }
-    turnSprites(player1, player2) {
+    turnFighters(player1, player2) {
         if (player1.position.x >= player2.position.x) {
-            if (player1.velocity.x <= 0) {
+            if (player1.velocity.x <= 0 && !player1.dead) {
                 player1.activeSprites = player1.sprites.left
-            } else if (player1.velocity.x > 0) {
+            } else if (player1.velocity.x > 0 && !player1.dead) {
                 player1.activeSprites = player1.sprites.right
             }
-            if (player2.velocity.x < 0) {
+            if (player2.velocity.x < 0 && !player2.dead) {
                 player2.activeSprites = player2.sprites.left
-            } else if (player2.velocity.x >= 0) {
+            } else if (player2.velocity.x >= 0 && !player2.dead) {
                 player2.activeSprites = player2.sprites.right
             }
         } else if (player1.position.x < player2.position.x) {
-            if (player2.velocity.x <= 0) {
+            if (player2.velocity.x <= 0 && !player2.dead) {
                 player2.activeSprites = player2.sprites.left
-            } else if (player2.velocity.x > 0) {
+            } else if (player2.velocity.x > 0 && !player2.dead) {
                 player2.activeSprites = player2.sprites.right
             }
-            if (player1.velocity.x < 0) {
+            if (player1.velocity.x < 0 && !player1.dead) {
                 player1.activeSprites = player1.sprites.left
-            } else if (player1.velocity.x >= 0) {
+            } else if (player1.velocity.x >= 0 && !player1.dead) {
                 player1.activeSprites = player1.sprites.right
             }
         }
@@ -157,8 +157,10 @@ export class Fighter extends Sprite {
     takeHit() {
         this.health -= 20
         if (this.health <= 0) {
+            this.switchSprite('death')
+        } else {
             this.switchSprite('takeHit')
-        } else this.switchSprite('takeHit')
+        }
     }
     switchSprite(sprite) {
         //override all other animations with the attack animation
