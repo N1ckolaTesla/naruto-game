@@ -58,7 +58,7 @@ class Game extends GameConstants {
         // this.player1 movement
         if (this.keys.a.pressed && this.player1.lastKey === 'a' && !this.player1.dead) {
             if (this.player1.isRunningLeft) {
-                this.player1.velocity.x = -10;
+                this.player1.velocity.x = -9;
                 this.player1.switchSprite('run');
             } else if (!this.player1.isRunningLeft) {
                 this.player1.velocity.x = -4;
@@ -66,7 +66,7 @@ class Game extends GameConstants {
             }
         } else if (this.keys.d.pressed && this.player1.lastKey === 'd' && !this.player1.dead) {
             if (this.player1.isRunningRight) {
-                this.player1.velocity.x = 10;
+                this.player1.velocity.x = 9;
                 this.player1.switchSprite('run');
             } else if (!this.player1.isRunningRight) {
                 this.player1.velocity.x = 4;
@@ -86,18 +86,18 @@ class Game extends GameConstants {
         // this.player2 movement
         if (this.keys.ArrowLeft.pressed && this.player2.lastKey === 'ArrowLeft' && !this.player2.dead) {
             if (this.player2.isRunningLeft) {
-                this.player2.velocity.x = -10;
+                this.player2.velocity.x = -9;
                 this.player2.switchSprite('run');
             } else if (!this.player2.isRunningLeft) {
-                this.player2.velocity.x = -5;
+                this.player2.velocity.x = -4;
                 this.player2.switchSprite('walk');
             }
         } else if (this.keys.ArrowRight.pressed && this.player2.lastKey === 'ArrowRight' && !this.player2.dead) {
             if (this.player2.isRunningRight) {
-                this.player2.velocity.x = 10;
+                this.player2.velocity.x = 9;
                 this.player2.switchSprite('run');
             } else if (!this.player2.isRunningRight) {
-                this.player2.velocity.x = 5;
+                this.player2.velocity.x = 4;
                 this.player2.switchSprite('walk');
             }
         } else {
