@@ -28,11 +28,11 @@ export const personNaruto = {
             framesMax: 6
         },
         jump: {
-            imageSrc: '../assets/imgs/person/Jump.png',
+            imageSrc: '../assets/imgs/person/naruto-jump-right.png',
             framesMax: 2
         },
         fall: {
-            imageSrc: '../assets/imgs/person/Fall.png',
+            imageSrc: '../assets/imgs/person/naruto-fall-right.png',
             framesMax: 2        
         },
         attack1: {
@@ -40,24 +40,24 @@ export const personNaruto = {
             framesMax: 4
         },
         attack2: {
-            imageSrc: '../assets/imgs/person/Attack2.png',
-            framesMax: 6
-        },
-        attack3: {
-            imageSrc: '../assets/imgs/person/naruto-hit-right.png',
-            framesMax: 13
-        },
-        attackFlying: {
-            imageSrc: '../assets/imgs/person/n-attack2-right.png',
-            framesMax: 2
-        },
-        takeHit: {
-            imageSrc: '../assets/imgs/person/Take Hit.png',
+            imageSrc: '../assets/imgs/person/naruto-attack2-right.png',
             framesMax: 4
         },
+        attack3: {
+            imageSrc: '../assets/imgs/person/naruto-attack3-right.png',
+            framesMax: 4
+        },
+        attackFlying: {
+            imageSrc: '../assets/imgs/person/naruto-attack-jump-right.png',
+            framesMax: 4
+        },
+        takeHit: {
+            imageSrc: '../assets/imgs/person/naruto-hit-right.png',
+            framesMax: 2
+        },
         death: {
-            imageSrc: '../assets/imgs/person/Death.png',
-            framesMax: 6
+            imageSrc: '../assets/imgs/person/naruto-death-right.png',
+            framesMax: 3
         }
     },
     attackBox: {
