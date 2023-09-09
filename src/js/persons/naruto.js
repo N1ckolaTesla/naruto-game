@@ -113,7 +113,7 @@ export const personNaruto = {
             x: 0,
             y: 70
         },
-        width: 20,
+        width: 22,
         height: 2
     }
 }

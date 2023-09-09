@@ -71,7 +71,7 @@ export class Fighter extends Sprite {
                 player2.activeSprites = player2.sprites.right
             }
             //setting the attackBox
-            player1.attackBox.offset.x = 0
+            player1.attackBox.offset.x = -5
             player2.attackBox.offset.x = 80
         } else if (player1.position.x < player2.position.x) {
             if (player2.velocity.x <= 0 && !player2.dead) {
@@ -86,7 +86,7 @@ export class Fighter extends Sprite {
             }
             //setting the attackBox
             player1.attackBox.offset.x = 80
-            player2.attackBox.offset.x = 0
+            player2.attackBox.offset.x = -5
         }
     }
     update() {

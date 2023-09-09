@@ -7,8 +7,8 @@ export const personSasuke = {
         x: 0,
         y: 0
     },
-    imageSrc: '../assets/imgs/enemy/Idle.png',
-    framesMax: 4,
+    imageSrc: '../assets/imgs/person/naruto-idle-left.png',
+    framesMax: 6,
     scale: 2,
     offset: {
         x: 0,
@@ -113,7 +113,7 @@ export const personSasuke = {
             x: 0,
             y: 70
         },
-        width: 20,
+        width: 22,
         height: 2
     }
 }
