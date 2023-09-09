@@ -1,5 +1,4 @@
 import { Sprite } from "./sprite"
-import { canMove, runLeft, runRight, jump } from "./utils"
 
 export class Fighter extends Sprite {
     constructor({
@@ -160,7 +159,7 @@ export class Fighter extends Sprite {
         this.switchSprite('attackFlying')
     }
     takeHit() {
-        this.health -= 1
+        this.health -= 20
         if (this.health <= 0) {
             this.switchSprite('death')
         } else {

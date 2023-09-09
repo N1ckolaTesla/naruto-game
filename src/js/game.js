@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, attackCollision, canMove, runLeft, runRight, jump, move, playerTakesHit, determineWinner, timerId } from "./utils";
+import { decreaseTimer, attackCollision, move, playerTakesHit, endGame } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -67,28 +67,18 @@ class Game extends GameConstants {
         // Detect for collision & this.player2 gets hit
         if (attackCollision(this.player1, this.player2)) {
             playerTakesHit(this.player2, this.player1, 'enemyHealth')
-        }
-        // If this.player1 misses
-        if (this.player1.isAttacking && this.player1.framesCurrent === 4) {
+        } else if (this.player1.isAttacking && this.player1.framesCurrent === 2) { //If this.player1 misses
             this.player1.isAttacking = false;
         }
+
         // Detect for collison & this.player1 gets hit
         if (attackCollision(this.player2, this.player1)) {
             playerTakesHit(this.player1, this.player2, 'playerHealth')
-        }
-        // If this.player2 misses
-        if (this.player2.isAttacking && this.player2.framesCurrent === 2) {
+        } else if (this.player2.isAttacking && this.player2.framesCurrent === 2) { // If this.player2 misses
             this.player2.isAttacking = false;
         }
         // End game based on health
-        if (this.player1.health <= 0 || this.player2.health <= 0) {
-            determineWinner({ player: this.player1, enemy: this.player2, timerId });
-            if (this.player1.health <= 0) {
-                this.player1.switchSprite('death');
-            } else if (this.player2.health <= 0) {
-                this.player2.switchSprite('death');
-            }
-        }
+        endGame(this.player1, this.player2)
 
         requestAnimationFrame(this.animate.bind(this)); // Use bind(this) to maintain the correct context
     }

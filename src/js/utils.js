@@ -72,10 +72,10 @@ export function jump(player) {
     }
 }
 
-export function playerTakesHit(playerBeated, playerAttacked, id) {
-    playerBeated.takeHit();
-    playerAttacked.isAttacking = false;
-    renderHealth(id, playerBeated.health);
+export function playerTakesHit(playerBeaten, playerAttacking, id) {
+    playerBeaten.takeHit();
+    playerAttacking.isAttacking = false;
+    renderHealth(id, playerBeaten.health);
 }
 
 function renderHealth(id , health) {
@@ -83,14 +83,14 @@ function renderHealth(id , health) {
     element.style.width = `${health}%`
 }
 
-export function determineWinner({player, enemy, timerId}) {
+export function determineWinner(player1, player2, timerId) {
     clearTimeout(timerId)
     document.querySelector('#displayText').style.display = 'flex'
-    if (player.health === enemy.health) {
+    if (player1.health === player2.health) {
         document.querySelector('#displayText').innerHTML = 'Tie'
-    } else if (player.health > enemy.health) {
+    } else if (player1.health > player2.health) {
         document.querySelector('#displayText').innerHTML = 'Player wins'
-    } else if (player.health < enemy.health) {
+    } else if (player1.health < player2.health) {
         document.querySelector('#displayText').innerHTML = 'Enemy wins'
     }
 }
@@ -108,5 +108,16 @@ export function decreaseTimer() {
     if (timer === 0) {
         document.querySelector('#displayText').style.display = 'flex'
         determineWinner({player, enemy, timerId})
+    }
+}
+
+export function endGame(player1, player2) {
+    if (player1.health <= 0 || player2.health <= 0) {
+        determineWinner(player1, player2, timerId);
+        if (player1.health <= 0) {
+            player1.switchSprite('death');
+        } else if (player2.health <= 0) {
+            player2.switchSprite('death');
+        }
     }
 }
