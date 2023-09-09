@@ -144,9 +144,7 @@ export class Fighter extends Sprite {
                         this.attack3Available = false
                     }, 1000)
                 }
-            } else if (
-                (this.attackCountAvailable >= 7 && this.attack3Available)
-            ) {
+            } else if (this.attackCountAvailable >= 7 && this.attack3Available) {
                 this.switchSprite('attack3')
             } else {
                 this.switchSprite('attack1')
@@ -161,7 +159,7 @@ export class Fighter extends Sprite {
         this.switchSprite('attackFlying')
     }
     takeHit() {
-        this.health -= 20
+        this.health -= 1
         if (this.health <= 0) {
             this.switchSprite('death')
         } else {
@@ -205,7 +203,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.idle.image
                     this.framesMax = this.activeSprites.idle.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.idle.framesMax
                 }
                 break
             case 'walk':
@@ -213,7 +210,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.walk.image
                     this.framesMax = this.activeSprites.walk.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.walk.framesMax
                 }
                 break
             case 'run':
@@ -221,7 +217,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.run.image
                     this.framesMax = this.activeSprites.run.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.run.framesMax
                 }
                 break
             case 'jump':
@@ -229,7 +224,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.jump.image
                     this.framesMax = this.activeSprites.jump.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.jump.framesMax
                 }
                 break
             case 'fall':
@@ -237,7 +231,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.fall.image
                     this.framesMax = this.activeSprites.fall.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.fall.framesMax
                 }
                 break
             case 'attack1':
@@ -245,7 +238,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.attack1.image
                     this.framesMax = this.activeSprites.attack1.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.attack1.framesMax
                     this.attackCount++
                 }
                 break
@@ -254,7 +246,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.attack2.image
                     this.framesMax = this.activeSprites.attack2.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.attack2.framesMax
                     this.attackCount++
                 }
                 break
@@ -263,7 +254,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.attack3.image
                     this.framesMax = this.activeSprites.attack3.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.attack3.framesMax
                     this.attackCount = 0
                     this.attackCountAvailable = 0
                 }
@@ -273,7 +263,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.attackFlying.image
                     this.framesMax = this.activeSprites.attackFlying.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.attackFlying.framesMax
                 }
                 break
             case 'takeHit':
@@ -281,7 +270,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.takeHit.image
                     this.framesMax = this.activeSprites.takeHit.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.takeHit.framesMax
                 }
                 break
             case 'death':
@@ -289,7 +277,6 @@ export class Fighter extends Sprite {
                     this.image = this.activeSprites.death.image
                     this.framesMax = this.activeSprites.death.framesMax
                     this.framesCurrent = 0
-                    this.framesMax = this.activeSprites.death.framesMax
                 }
                 break
         }
