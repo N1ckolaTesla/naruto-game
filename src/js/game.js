@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, rectangularCollision, determineWinner, timerId } from "./utils";
+import { decreaseTimer, attackCollision, determineWinner, timerId } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -115,14 +115,7 @@ class Game extends GameConstants {
         this.player1.turnFighters(this.player1, this.player2)
 
         // Detect for collision & this.player2 gets hit
-        if (
-            rectangularCollision({
-                rectangle1: this.player1,
-                rectangle2: this.player2
-            }) &&
-            this.player1.isAttacking &&
-            this.player1.framesCurrent === 2
-        ) {
+        if (attackCollision(this.player1, this.player2)) {
             this.player2.takeHit();
             this.player1.isAttacking = false;
             renderHealth('enemyHealth', this.player2.health);
@@ -132,14 +125,7 @@ class Game extends GameConstants {
             this.player1.isAttacking = false;
         }
         // Detect for collison & this.player1 gets hit
-        if (
-            rectangularCollision({
-                rectangle1: this.player2,
-                rectangle2: this.player1
-            }) &&
-            this.player2.isAttacking &&
-            this.player2.framesCurrent === 2
-        ) {
+        if (attackCollision(this.player2, this.player1)) {
             this.player1.takeHit();
             this.player2.isAttacking = false;
             renderHealth('playerHealth', this.player1.health);
