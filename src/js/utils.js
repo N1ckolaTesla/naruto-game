@@ -83,6 +83,10 @@ function renderHealth(id , health) {
     element.style.width = `${health}%`
 }
 
+export function attackFlying(player) {
+    player.switchSprite('attackFlying')
+}
+
 export function determineWinner(player1, player2, timerId) {
     clearTimeout(timerId)
     document.querySelector('#displayText').style.display = 'flex'

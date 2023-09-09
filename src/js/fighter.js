@@ -1,4 +1,5 @@
 import { Sprite } from "./sprite"
+import { attackFlying } from "./utils"
 
 export class Fighter extends Sprite {
     constructor({
@@ -33,7 +34,7 @@ export class Fighter extends Sprite {
             height: attackBox.height 
         }
         this.color = color
-        this.isAttacking
+        this.isAttacking = false
         this.health = 100
         this.framesCurrent = 0
         this.framesElapsed = 0
@@ -113,7 +114,8 @@ export class Fighter extends Sprite {
     }
     attack() {
         if (this.velocity.y !== 0) {
-            this.attackFlying()
+            this.isAttacking = true
+            attackFlying(this)
             return
         }
         if (this.isRunningLeft || this.isRunningRight) {
@@ -154,9 +156,6 @@ export class Fighter extends Sprite {
             }
         }
         this.isAttacking = true
-    }
-    attackFlying() {
-        this.switchSprite('attackFlying')
     }
     takeHit() {
         this.health -= 20

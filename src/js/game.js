@@ -77,6 +77,7 @@ class Game extends GameConstants {
         } else if (this.player2.isAttacking && this.player2.framesCurrent === 2) { // If this.player2 misses
             this.player2.isAttacking = false;
         }
+
         // End game based on health
         endGame(this.player1, this.player2)
 
