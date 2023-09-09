@@ -1,4 +1,5 @@
 import { Sprite } from "./sprite"
+import { canMove, runLeft, runRight, jump } from "./utils"
 
 export class Fighter extends Sprite {
     constructor({

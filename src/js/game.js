@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, attackCollision, canMove, runLeft, runRight, jump, determineWinner, timerId } from "./utils";
+import { decreaseTimer, attackCollision, canMove, runLeft, runRight, jump, move, playerTakesHit, determineWinner, timerId } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -56,33 +56,17 @@ class Game extends GameConstants {
         this.player2.velocity.x = 0;
 
         // this.player1 movement
-        if (canMove(this.player1, this.keys.a, 'a', this.player1.dead)) {
-            runLeft(this.player1)
-        } else if (canMove(this.player1, this.keys.d, 'd', this.player1.dead)) {
-            runRight(this.player1)
-        } else {
-            this.player1.switchSprite('idle');
-        }
-        jump(this.player1)
+        move(this.player1, this.keys, 'naruto')
 
         // this.player2 movement
-        if (canMove(this.player2, this.keys.ArrowLeft, 'ArrowLeft', this.player2.dead)) {
-            runLeft(this.player2)
-        } else if (canMove(this.player2, this.keys.ArrowRight, 'ArrowRight', this.player2.dead)) {
-            runRight(this.player2)
-        } else {
-            this.player2.switchSprite('idle');
-        }
-        jump(this.player2)
+        move(this.player2, this.keys, 'sasuke')
 
         // turn fighters
         this.player1.turnFighters(this.player1, this.player2)
 
         // Detect for collision & this.player2 gets hit
         if (attackCollision(this.player1, this.player2)) {
-            this.player2.takeHit();
-            this.player1.isAttacking = false;
-            renderHealth('enemyHealth', this.player2.health);
+            playerTakesHit(this.player2, this.player1, 'enemyHealth')
         }
         // If this.player1 misses
         if (this.player1.isAttacking && this.player1.framesCurrent === 4) {
@@ -90,9 +74,7 @@ class Game extends GameConstants {
         }
         // Detect for collison & this.player1 gets hit
         if (attackCollision(this.player2, this.player1)) {
-            this.player1.takeHit();
-            this.player2.isAttacking = false;
-            renderHealth('playerHealth', this.player1.health);
+            playerTakesHit(this.player1, this.player2, 'playerHealth')
         }
         // If this.player2 misses
         if (this.player2.isAttacking && this.player2.framesCurrent === 2) {
@@ -127,9 +109,3 @@ const newGame = () => {
 }
 
 newGame()
-
-
-const renderHealth = (id , health) => {
-       const element = document.getElementById(id)
-       element.style.width = `${health}%`
-}

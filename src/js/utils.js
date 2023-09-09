@@ -9,8 +9,35 @@ export function attackCollision(player1, player2) {
     )
 }
 
-export function canMove(player, key, lastKey, isDead) {
-    if (key.pressed && player.lastKey === lastKey && !isDead) {
+export function move(player, keys, name) {
+    switch (name) {
+        case 'naruto': {
+            if (canMove(player, keys.a, 'a')) {
+                runLeft(player)
+            } else if (canMove(player, keys.d, 'd')) {
+                runRight(player)
+            } else {
+                player.switchSprite('idle');
+            }
+            jump(player)
+        }
+        break
+        case 'sasuke': {
+            if (canMove(player, keys.ArrowLeft, 'ArrowLeft')) {
+                runLeft(player)
+            } else if (canMove(player, keys.ArrowRight, 'ArrowRight')) {
+                runRight(player)
+            } else {
+                player.switchSprite('idle');
+            }
+            jump(player)
+        }
+        break
+    }
+}
+
+export function canMove(player, key, lastKey) {
+    if (key.pressed && player.lastKey === lastKey && !player.isDead) {
         return true
     }
 }
@@ -43,6 +70,17 @@ export function jump(player) {
         player.velocity.x = player.velocityXFlying;
         player.switchSprite('fall');
     }
+}
+
+export function playerTakesHit(playerBeated, playerAttacked, id) {
+    playerBeated.takeHit();
+    playerAttacked.isAttacking = false;
+    renderHealth(id, playerBeated.health);
+}
+
+function renderHealth(id , health) {
+    const element = document.getElementById(id)
+    element.style.width = `${health}%`
 }
 
 export function determineWinner({player, enemy, timerId}) {
