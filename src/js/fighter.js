@@ -10,7 +10,7 @@ export class Fighter extends Sprite {
         framesMax = 1,
         offset = {x: 0, y: 0},
         sprites,
-        attackBox = { offset: {}, width: undefined, height: undefined },
+        attackBox = { offset: {}, width: 1, height: 1 },
     }) {
         super({
             position,
@@ -20,7 +20,7 @@ export class Fighter extends Sprite {
             offset
         })
         this.velocity = velocity
-        this.width = 50
+        this.width = 50 * this.scale
         this.height = 150
         this.lastKey
         this.attackBox = {
@@ -70,6 +70,9 @@ export class Fighter extends Sprite {
             } else if (player2.velocity.x >= 0 && !player2.dead) {
                 player2.activeSprites = player2.sprites.right
             }
+            //setting the attackBox
+            player1.attackBox.offset.x = 0
+            player2.attackBox.offset.x = 80
         } else if (player1.position.x < player2.position.x) {
             if (player2.velocity.x <= 0 && !player2.dead) {
                 player2.activeSprites = player2.sprites.left
@@ -81,6 +84,9 @@ export class Fighter extends Sprite {
             } else if (player1.velocity.x >= 0 && !player1.dead) {
                 player1.activeSprites = player1.sprites.right
             }
+            //setting the attackBox
+            player1.attackBox.offset.x = 80
+            player2.attackBox.offset.x = 0
         }
     }
     update() {

@@ -110,10 +110,10 @@ export const personNaruto = {
     },
     attackBox: {
         offset: {
-            x: 100,
+            x: 0,
             y: 70
         },
-        width: 30,
-        height: 10
+        width: 20,
+        height: 2
     }
 }
