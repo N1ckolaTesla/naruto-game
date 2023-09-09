@@ -9,6 +9,42 @@ export function attackCollision(player1, player2) {
     )
 }
 
+export function canMove(player, key, lastKey, isDead) {
+    if (key.pressed && player.lastKey === lastKey && !isDead) {
+        return true
+    }
+}
+
+export function runLeft(player) {
+    if (player.isRunningLeft) {
+        player.velocity.x = -9;
+        player.switchSprite('run');
+    } else if (!player.isRunningLeft) {
+        player.velocity.x = -4;
+        player.switchSprite('walk');
+    }
+}
+
+export function runRight(player) {
+    if (player.isRunningRight) {
+        player.velocity.x = 9;
+        player.switchSprite('run');
+    } else if (!player.isRunningRight) {
+        player.velocity.x = 4;
+        player.switchSprite('walk');
+    }
+}
+
+export function jump(player) {
+    if (player.velocity.y < 0) {
+        player.velocity.x = player.velocityXFlying;
+        player.switchSprite('jump');
+    } else if (player.velocity.y > 0) {
+        player.velocity.x = player.velocityXFlying;
+        player.switchSprite('fall');
+    }
+}
+
 export function determineWinner({player, enemy, timerId}) {
     clearTimeout(timerId)
     document.querySelector('#displayText').style.display = 'flex'

@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, attackCollision, determineWinner, timerId } from "./utils";
+import { decreaseTimer, attackCollision, canMove, runLeft, runRight, jump, determineWinner, timerId } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -56,60 +56,24 @@ class Game extends GameConstants {
         this.player2.velocity.x = 0;
 
         // this.player1 movement
-        if (this.keys.a.pressed && this.player1.lastKey === 'a' && !this.player1.dead) {
-            if (this.player1.isRunningLeft) {
-                this.player1.velocity.x = -9;
-                this.player1.switchSprite('run');
-            } else if (!this.player1.isRunningLeft) {
-                this.player1.velocity.x = -4;
-                this.player1.switchSprite('walk');
-            }
-        } else if (this.keys.d.pressed && this.player1.lastKey === 'd' && !this.player1.dead) {
-            if (this.player1.isRunningRight) {
-                this.player1.velocity.x = 9;
-                this.player1.switchSprite('run');
-            } else if (!this.player1.isRunningRight) {
-                this.player1.velocity.x = 4;
-                this.player1.switchSprite('walk');
-            }
+        if (canMove(this.player1, this.keys.a, 'a', this.player1.dead)) {
+            runLeft(this.player1)
+        } else if (canMove(this.player1, this.keys.d, 'd', this.player1.dead)) {
+            runRight(this.player1)
         } else {
             this.player1.switchSprite('idle');
         }
-        if (this.player1.velocity.y < 0) {
-            this.player1.velocity.x = this.player1.velocityXFlying;
-            this.player1.switchSprite('jump');
-        } else if (this.player1.velocity.y > 0) {
-            this.player1.velocity.x = this.player1.velocityXFlying;
-            this.player1.switchSprite('fall');
-        }
+        jump(this.player1)
 
         // this.player2 movement
-        if (this.keys.ArrowLeft.pressed && this.player2.lastKey === 'ArrowLeft' && !this.player2.dead) {
-            if (this.player2.isRunningLeft) {
-                this.player2.velocity.x = -9;
-                this.player2.switchSprite('run');
-            } else if (!this.player2.isRunningLeft) {
-                this.player2.velocity.x = -4;
-                this.player2.switchSprite('walk');
-            }
-        } else if (this.keys.ArrowRight.pressed && this.player2.lastKey === 'ArrowRight' && !this.player2.dead) {
-            if (this.player2.isRunningRight) {
-                this.player2.velocity.x = 9;
-                this.player2.switchSprite('run');
-            } else if (!this.player2.isRunningRight) {
-                this.player2.velocity.x = 4;
-                this.player2.switchSprite('walk');
-            }
+        if (canMove(this.player2, this.keys.ArrowLeft, 'ArrowLeft', this.player2.dead)) {
+            runLeft(this.player2)
+        } else if (canMove(this.player2, this.keys.ArrowRight, 'ArrowRight', this.player2.dead)) {
+            runRight(this.player2)
         } else {
             this.player2.switchSprite('idle');
         }
-        if (this.player2.velocity.y < 0) {
-            this.player2.velocity.x = this.player2.velocityXFlying;
-            this.player2.switchSprite('jump');
-        } else if (this.player2.velocity.y > 0) {
-            this.player2.velocity.x = this.player2.velocityXFlying;
-            this.player2.switchSprite('fall');
-        }
+        jump(this.player2)
 
         // turn fighters
         this.player1.turnFighters(this.player1, this.player2)
