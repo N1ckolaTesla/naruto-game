@@ -37,7 +37,7 @@ export function move(player, keys, name) {
 }
 
 export function canMove(player, key, lastKey) {
-    if (key.pressed && player.lastKey === lastKey && !player.isDead) {
+    if (key.pressed && player.lastKey === lastKey && !player.dead) {
         return true
     }
 }
