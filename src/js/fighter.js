@@ -165,7 +165,7 @@ export class Fighter extends Sprite {
         } else if (hp === 2) {
             this.switchSprite('fallOff')
         } else {
-            this.switchSprite('takekHit')
+            this.switchSprite('takeHit')
         }
     }
     switchSprite(sprite) {
