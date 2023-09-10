@@ -56,6 +56,10 @@ export const personNaruto = {
                 imageSrc: '../assets/imgs/person/naruto-hit-right.png',
                 framesMax: 2
             },
+            fallOff: {
+                imageSrc: '../assets/imgs/person/naruto-fallOff-right.png',
+                framesMax: 4
+            },
             death: {
                 imageSrc: '../assets/imgs/person/naruto-death-right.png',
                 framesMax: 3
@@ -101,6 +105,10 @@ export const personNaruto = {
             takeHit: {
                 imageSrc: '../assets/imgs/person/naruto-hit-left.png',
                 framesMax: 2
+            },
+            fallOff: {
+                imageSrc: '../assets/imgs/person/naruto-fallOff-left.png',
+                framesMax: 4
             },
             death: {
                 imageSrc: '../assets/imgs/person/naruto-death-left.png',

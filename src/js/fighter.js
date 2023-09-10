@@ -162,8 +162,10 @@ export class Fighter extends Sprite {
         this.health -= hp
         if (this.health <= 0) {
             this.switchSprite('death')
+        } else if (hp === 2) {
+            this.switchSprite('fallOff')
         } else {
-            this.switchSprite('takeHit')
+            this.switchSprite('takekHit')
         }
     }
     switchSprite(sprite) {
@@ -183,6 +185,13 @@ export class Fighter extends Sprite {
             return
         }
         //override when fighter gets hit
+        if (
+            this.image === this.activeSprites.fallOff.image &&
+            this.framesCurrent < this.activeSprites.fallOff.framesMax - 1
+        ) {
+            this.velocity.x = -4
+            return
+        }
         if (
             this.image === this.activeSprites.takeHit.image &&
             this.framesCurrent < this.activeSprites.takeHit.framesMax - 1
@@ -269,6 +278,13 @@ export class Fighter extends Sprite {
                 if (this.image !== this.activeSprites.takeHit.image) {
                     this.image = this.activeSprites.takeHit.image
                     this.framesMax = this.activeSprites.takeHit.framesMax
+                    this.framesCurrent = 0
+                }
+                break
+            case 'fallOff':
+                if (this.image !== this.activeSprites.fallOff.image) {
+                    this.image = this.activeSprites.fallOff.image
+                    this.framesMax = this.activeSprites.fallOff.framesMax
                     this.framesCurrent = 0
                 }
                 break
