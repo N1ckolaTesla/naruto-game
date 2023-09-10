@@ -73,7 +73,13 @@ export function jump(player) {
 }
 
 export function playerTakesHit(playerBeaten, playerAttacking, id) {
-    playerBeaten.takeHit();
+    if (playerAttacking.image === playerAttacking.activeSprites.attack1.image ||
+        playerAttacking.image === playerAttacking.activeSprites.attack2.image ||
+        playerAttacking.image === playerAttacking.activeSprites.attackFlying.image) {
+        playerBeaten.takeHit(1);
+    } else if (playerAttacking.image === playerAttacking.activeSprites.attack3.image) {
+        playerBeaten.takeHit(2)
+    }
     playerAttacking.isAttacking = false;
     renderHealth(id, playerBeaten.health);
 }
@@ -84,6 +90,7 @@ function renderHealth(id , health) {
 }
 
 export function attackFlying(player) {
+    player.isAttacking = true
     player.switchSprite('attackFlying')
 }
 
