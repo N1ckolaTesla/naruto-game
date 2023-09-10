@@ -119,6 +119,7 @@ export class Fighter extends Sprite {
             return
         }
         if (this.isRunningLeft || this.isRunningRight) {
+            this.isAttacking = true
             this.switchSprite('attack3')
             return
         }
