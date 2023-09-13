@@ -1,5 +1,3 @@
-import { GameConstants } from "./gameConstants";
-
 export function attackCollision(player1, player2) {
     return (
         player1.attackBox.position.x + player1.attackBox.width >= player2.position.x &&

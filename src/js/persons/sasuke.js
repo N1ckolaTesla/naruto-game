@@ -58,7 +58,7 @@ export const personSasuke = {
             },
             fallOff: {
                 imageSrc: '../assets/imgs/person/naruto-fallOff-right.png',
-                framesMax: 4
+                framesMax: 9
             },
             death: {
                 imageSrc: '../assets/imgs/person/naruto-death-right.png',
@@ -108,7 +108,7 @@ export const personSasuke = {
             },
             fallOff: {
                 imageSrc: '../assets/imgs/person/naruto-fallOff-left.png',
-                framesMax: 4
+                framesMax: 9
             },
             death: {
                 imageSrc: '../assets/imgs/person/naruto-death-left.png',
