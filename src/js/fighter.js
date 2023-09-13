@@ -58,8 +58,8 @@ export class Fighter extends Sprite {
         this.isRunningRight = false,
         this.isRunningLeft = false
         this.velocityXFlying = 0
-        this.velocityXFlyingLeft = -30
-        this.velocityXFlyingRight = 30
+        this.velocityXFlyingLeft = -35
+        this.velocityXFlyingRight = 35
     }
     turnFighters(player1, player2) {
         if (player1.position.x >= player2.position.x) {
