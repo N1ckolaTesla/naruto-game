@@ -94,6 +94,14 @@ export function attackFlying(player) {
     player.switchSprite('attackFlying')
 }
 
+export function isPlayerLookingRight(player1, player2) {
+    if (player1.position.x < player2.position.x) {
+        return true
+    } else if (player1.position.x >= player2.position.x) {
+        return false
+    }
+}
+
 export function determineWinner(player1, player2, timerId) {
     clearTimeout(timerId)
     document.querySelector('#displayText').style.display = 'flex'

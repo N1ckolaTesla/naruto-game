@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, attackCollision, move, playerTakesHit, endGame } from "./utils";
+import { decreaseTimer, attackCollision, move, playerTakesHit, isPlayerLookingRight, endGame } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -76,6 +76,28 @@ class Game extends GameConstants {
             playerTakesHit(this.player1, this.player2, 'playerHealth')
         } else if (this.player2.isAttacking && this.player2.framesCurrent === 2) { // If this.player2 misses
             this.player2.isAttacking = false;
+        }
+
+        if (
+            this.player1.image === this.player1.activeSprites.fallOff.image &&
+            this.player1.framesCurrent < this.player1.activeSprites.fallOff.framesMax - 1
+        ) {
+            if (isPlayerLookingRight(this.player1, this.player2)) {
+                this.player1.velocity.x = -10
+            } else {
+                this.player1.velocity.x = 10
+            }
+        }
+
+        if (
+            this.player2.image === this.player2.activeSprites.fallOff.image &&
+            this.player2.framesCurrent < this.player2.activeSprites.fallOff.framesMax - 1
+        ) {
+            if (isPlayerLookingRight(this.player2, this.player1)) {
+                this.player2.velocity.x = -10
+            } else {
+                this.player2.velocity.x = 10
+            }
         }
 
         // End game based on health

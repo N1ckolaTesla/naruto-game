@@ -189,7 +189,6 @@ export class Fighter extends Sprite {
             this.image === this.activeSprites.fallOff.image &&
             this.framesCurrent < this.activeSprites.fallOff.framesMax - 1
         ) {
-            this.velocity.x = -4
             return
         }
         if (
