@@ -108,7 +108,7 @@ export const personNaruto = {
             },
             fallOff: {
                 imageSrc: '../assets/imgs/person/naruto-fallOff-left.png',
-                framesMax: 4
+                framesMax: 9
             },
             death: {
                 imageSrc: '../assets/imgs/person/naruto-death-left.png',
