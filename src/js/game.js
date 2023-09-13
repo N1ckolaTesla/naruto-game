@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, attackCollision, move, playerTakesHit, isPlayerLookingRight, endGame } from "./utils";
+import { decreaseTimer, attackCollision, move, playerTakesHit, isPlayerLookingRight, playerThrowBack, endGame } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -79,21 +79,23 @@ class Game extends GameConstants {
         }
 
 
-        if (
-            this.player1.image === this.player1.activeSprites.fallOff.image &&
-            this.player1.framesCurrent < this.player1.activeSprites.fallOff.framesMax - 1
-        ) {
-            if (isPlayerLookingRight(this.player1, this.player2)) {
-                this.player1.velocityXFlyingLeft += 0.6
-                this.player1.velocity.x = this.player1.velocityXFlyingLeft
-            } else {
-                this.player1.velocityXFlyingRight -= 0.6
-                this.player1.velocity.x = this.player1.velocityXFlyingRight           
-            }
-        } else {
-            this.player1.velocityXFlyingLeft = -22
-            this.player1.velocityXFlyingRight = 22
-        }
+        // if (
+        //     this.player1.image === this.player1.activeSprites.fallOff.image &&
+        //     this.player1.framesCurrent < this.player1.activeSprites.fallOff.framesMax - 1
+        // ) {
+        //     if (isPlayerLookingRight(this.player1, this.player2)) {
+        //         this.player1.velocityXFlyingLeft += 0.6
+        //         this.player1.velocity.x = this.player1.velocityXFlyingLeft
+        //     } else {
+        //         this.player1.velocityXFlyingRight -= 0.6
+        //         this.player1.velocity.x = this.player1.velocityXFlyingRight           
+        //     }
+        // } else {
+        //     this.player1.velocityXFlyingLeft = -22
+        //     this.player1.velocityXFlyingRight = 22
+        // }
+
+        playerThrowBack(this.player1, this.player2)
 
         if (
             this.player2.image === this.player2.activeSprites.fallOff.image &&

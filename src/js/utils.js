@@ -85,6 +85,24 @@ export function restrictMoving(player) {
     }
 }
 
+export function playerThrowBack(player1, player2) {
+    if (
+        player1.image === player1.activeSprites.fallOff.image &&
+        player1.framesCurrent < player1.activeSprites.fallOff.framesMax - 1
+    ) {
+        if (isPlayerLookingRight(player1, player2)) {
+            player1.velocityXFlyingLeft += 0.6
+            player1.velocity.x = player1.velocityXFlyingLeft
+        } else {
+            player1.velocityXFlyingRight -= 0.6
+            player1.velocity.x = player1.velocityXFlyingRight           
+        }
+    } else {
+        player1.velocityXFlyingLeft = -22
+        player1.velocityXFlyingRight = 22
+    }
+}
+
 export function playerTakesHit(playerBeaten, playerAttacking, id) {
     if (playerAttacking.image === playerAttacking.activeSprites.attack1.image ||
         playerAttacking.image === playerAttacking.activeSprites.attack2.image ||
