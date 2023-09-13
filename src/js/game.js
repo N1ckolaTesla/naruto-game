@@ -84,15 +84,15 @@ class Game extends GameConstants {
             this.player1.framesCurrent < this.player1.activeSprites.fallOff.framesMax - 1
         ) {
             if (isPlayerLookingRight(this.player1, this.player2)) {
-                this.player1.velocityXFlyingLeft += 0.7
+                this.player1.velocityXFlyingLeft += 0.6
                 this.player1.velocity.x = this.player1.velocityXFlyingLeft
             } else {
-                this.player1.velocityXFlyingRight -= 0.7
+                this.player1.velocityXFlyingRight -= 0.6
                 this.player1.velocity.x = this.player1.velocityXFlyingRight           
             }
         } else {
-            this.player1.velocityXFlyingLeft = -35
-            this.player1.velocityXFlyingRight = 35
+            this.player1.velocityXFlyingLeft = -22
+            this.player1.velocityXFlyingRight = 22
         }
 
         if (
