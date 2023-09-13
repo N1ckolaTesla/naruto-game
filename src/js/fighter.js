@@ -1,5 +1,5 @@
 import { Sprite } from "./sprite"
-import { attackFlying } from "./utils"
+import { attackFlying, restrictMoving } from "./utils"
 
 export class Fighter extends Sprite {
     constructor({
@@ -191,6 +191,7 @@ export class Fighter extends Sprite {
             this.image === this.activeSprites.fallOff.image &&
             this.framesCurrent < this.activeSprites.fallOff.framesMax - 1
         ) {
+            restrictMoving(this)
             return
         }
         if (

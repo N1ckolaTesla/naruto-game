@@ -1,3 +1,5 @@
+import { GameConstants } from "./gameConstants";
+
 export function attackCollision(player1, player2) {
     return (
         player1.attackBox.position.x + player1.attackBox.width >= player2.position.x &&
@@ -50,6 +52,7 @@ export function runLeft(player) {
         player.velocity.x = -4;
         player.switchSprite('walk');
     }
+    restrictMoving(player)
 }
 
 export function runRight(player) {
@@ -60,6 +63,7 @@ export function runRight(player) {
         player.velocity.x = 4;
         player.switchSprite('walk');
     }
+    restrictMoving(player)
 }
 
 export function jump(player) {
@@ -69,6 +73,14 @@ export function jump(player) {
     } else if (player.velocity.y > 0) {
         player.velocity.x = player.velocityXFlying;
         player.switchSprite('fall');
+    }
+}
+
+export function restrictMoving(player) {
+    if (player.position.x < 0) {
+        player.position.x = 0
+    } else if (player.position.x > 1024 - player.width) {
+        player.position.x = 1024 - player.width
     }
 }
 
