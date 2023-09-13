@@ -74,6 +74,7 @@ export function jump(player) {
         player.velocity.x = player.velocityXFlying;
         player.switchSprite('fall');
     }
+    restrictMoving(player)
 }
 
 export function restrictMoving(player) {
