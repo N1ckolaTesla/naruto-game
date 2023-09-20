@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, attackCollision, move, playerTakesHit, playerThrowBack, endGame } from "./utils";
+import { decreaseTimer, attackCollision, move, playerTakesHit, playerThrowBack, preventPassingThrough, endGame } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -81,6 +81,9 @@ class Game extends GameConstants {
         // Throw persons back
         playerThrowBack(this.player1, this.player2)
         playerThrowBack(this.player2, this.player1)
+
+        preventPassingThrough(this.player1, this.player2)
+        // preventPassingThrough(this.player2, this.player1)
 
         // End game based on health
         endGame(this.player1, this.player2)

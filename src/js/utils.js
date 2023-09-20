@@ -64,6 +64,63 @@ export function runRight(player) {
     restrictMoving(player)
 }
 
+export function preventPassingThrough(player1, player2) {
+    if (isTouchingRight(player1, player2)) {
+        if (isGoingUnder(player1, player2) && player1.lastKey === 'd') {
+            return
+        }
+        if (isPlayerLookingRight(player1, player2) && player1.lastKey !== 'a') {
+            player1.velocity.x = 0
+        } 
+    } else if (isTouchingLeft(player1, player2)) {
+        if (isGoingUnder(player1, player2) && player1.lastKey === 'a') {
+            return
+        }
+        if (!isPlayerLookingRight(player1, player2) && player1.lastKey !== 'd') {
+            player1.velocity.x = 0
+        }
+    }
+    if (isTouchingRight(player2, player1)) {
+        if (isGoingUnder(player2, player1) && player2.lastKey === 'ArrowRight') {
+            return
+        }
+        if (isPlayerLookingRight(player2, player1) && player2.lastKey !== 'ArrowLeft') {
+            player2.velocity.x = 0
+        }
+    } else if (isTouchingLeft(player2, player1)) {
+        if (isGoingUnder(player2, player1) && player2.lastKey === 'ArrowLeft') {
+            return
+        }
+        if (!isPlayerLookingRight(player2, player1) && player2.lastKey !== 'ArrowRight') {
+            player2.velocity.x = 0
+        }
+    }
+}
+
+export function isTouchingRight(player1, player2) {
+    return (
+        (player1.position.x + player1.width >= player2.position.x) &&
+        (player1.position.x + player1.width <= player2.position.x + player2.width) &&
+        (player1.position.y + player1.height > player2.position.y)
+    )
+}
+
+export function isTouchingLeft(player1, player2) {
+    return (
+        (player1.position.x <= player2.position.x + player2.width) &&
+        (player1.position.x > player2.position.x) &&
+        (player1.position.y + player1.height > player2.position.y)
+    )
+}
+
+export function isGoingUnder(player1, player2) {
+    if (player1.position.y < player2.position.y + player2.height) {
+        return false
+    } else {
+        return true
+    }
+}
+
 export function jump(player) {
     if (player.velocity.y < 0) {
         player.velocity.x = player.velocityXFlying;
