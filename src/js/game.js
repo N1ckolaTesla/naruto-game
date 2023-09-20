@@ -82,8 +82,8 @@ class Game extends GameConstants {
         playerThrowBack(this.player1, this.player2)
         playerThrowBack(this.player2, this.player1)
 
-        preventPassingThrough(this.player1, this.player2)
-        // preventPassingThrough(this.player2, this.player1)
+        //Prevent passing one player through another
+        preventPassingThrough(this.player1, this.player2, this.keys)
 
         // End game based on health
         endGame(this.player1, this.player2)
@@ -91,8 +91,8 @@ class Game extends GameConstants {
         requestAnimationFrame(this.animate.bind(this)); // Use bind(this) to maintain the correct context
     }
     removeListeners() {
-        document.removeEventListener('keydown', keyDownListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
-        document.removeEventListener('keyup', keyUpListener({keys:this.keys, enemy: this.player2, player: this.player1})); 
+        document.removeEventListener('keydown', keyDownListener({keys: this.keys, enemy: this.player2, player: this.player1})); 
+        document.removeEventListener('keyup', keyUpListener({keys: this.keys, enemy: this.player2, player: this.player1})); 
     }
 }
 

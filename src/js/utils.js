@@ -36,13 +36,13 @@ export function move(player, keys, name) {
     }
 }
 
-export function canMove(player, key, lastKey) {
+function canMove(player, key, lastKey) {
     if (key.pressed && player.lastKey === lastKey && !player.dead) {
         return true
     }
 }
 
-export function runLeft(player) {
+function runLeft(player) {
     if (player.isRunningLeft) {
         player.velocity.x = -9;
         player.switchSprite('run');
@@ -53,7 +53,7 @@ export function runLeft(player) {
     restrictMoving(player)
 }
 
-export function runRight(player) {
+function runRight(player) {
     if (player.isRunningRight) {
         player.velocity.x = 9;
         player.switchSprite('run');
@@ -64,64 +64,77 @@ export function runRight(player) {
     restrictMoving(player)
 }
 
-export function preventPassingThrough(player1, player2) {
-    if (isTouchingRight(player1, player2)) {
-        if (isGoingUnder(player1, player2) && player1.lastKey === 'd') {
-            return
+export function preventPassingThrough(player1, player2, keys) {
+    if (keys.d.pressed && player1.lastKey === 'd') {
+        if (!checkY(player1, player2)) {
+            if (checkXRight(player1, player2)) {
+                if (!player1.image.src.includes('fallOff')) {
+                    player1.velocity.x = 0
+                }
+            }
         }
-        if (isPlayerLookingRight(player1, player2) && player1.lastKey !== 'a') {
-            player1.velocity.x = 0
-        } 
-    } else if (isTouchingLeft(player1, player2)) {
-        if (isGoingUnder(player1, player2) && player1.lastKey === 'a') {
-            return
-        }
-        if (!isPlayerLookingRight(player1, player2) && player1.lastKey !== 'd') {
-            player1.velocity.x = 0
-        }
-    }
-    if (isTouchingRight(player2, player1)) {
-        if (isGoingUnder(player2, player1) && player2.lastKey === 'ArrowRight') {
-            return
-        }
-        if (isPlayerLookingRight(player2, player1) && player2.lastKey !== 'ArrowLeft') {
-            player2.velocity.x = 0
-        }
-    } else if (isTouchingLeft(player2, player1)) {
-        if (isGoingUnder(player2, player1) && player2.lastKey === 'ArrowLeft') {
-            return
-        }
-        if (!isPlayerLookingRight(player2, player1) && player2.lastKey !== 'ArrowRight') {
-            player2.velocity.x = 0
+    } else if (keys.a.pressed && player1.lastKey === 'a') {
+        if (!checkY(player1, player2)) {
+            if (checkXLeft(player1, player2)) {
+                if (!player1.image.src.includes('fallOff')) {
+                    player1.velocity.x = 0
+                }
+            }
         }
     }
+    if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
+        if (!checkY(player2, player1)) {
+            if (checkXRight(player2, player1)) {
+                if (!player2.image.src.includes('fallOff')) {
+                    player2.velocity.x = 0
+                }
+            }
+        }
+    } else if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {
+        if (!checkY(player2, player1)) {
+            if (checkXLeft(player2, player1)) {
+                if (!player2.image.src.includes('fallOff')) {
+                    player2.velocity.x = 0
+                }
+            }
+        }
+    }
 }
 
-export function isTouchingRight(player1, player2) {
-    return (
-        (player1.position.x + player1.width >= player2.position.x) &&
-        (player1.position.x + player1.width <= player2.position.x + player2.width) &&
-        (player1.position.y + player1.height > player2.position.y)
-    )
-}
-
-export function isTouchingLeft(player1, player2) {
-    return (
-        (player1.position.x <= player2.position.x + player2.width) &&
-        (player1.position.x > player2.position.x) &&
-        (player1.position.y + player1.height > player2.position.y)
-    )
-}
-
-export function isGoingUnder(player1, player2) {
-    if (player1.position.y < player2.position.y + player2.height) {
-        return false
-    } else {
+function checkY(player1, player2) {
+    if (
+        (player1.position.y + player1.height < player2.position.y) ||
+        (player1.position.y > player2.position.y + player2.height)
+    ) {
         return true
+    } else {
+        return false
     }
 }
 
-export function jump(player) {
+function checkXRight(player1, player2) {
+    if (
+        (player1.position.x + player1.width >= player2.position.x) &&
+        (player1.position.x + player1.width < player2.position.x + player2.width)
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function checkXLeft(player1, player2) {
+    if (
+        (player1.position.x <= player2.position.x + player2.width) &&
+        (player1.position.x > player2.position.x)
+    ) {
+        return true
+    } else {
+        return false
+    }
+}
+
+function jump(player) {
     if (player.velocity.y < 0) {
         player.velocity.x = player.velocityXFlying;
         player.switchSprite('jump');
@@ -180,7 +193,7 @@ export function attackFlying(player) {
     player.switchSprite('attackFlying')
 }
 
-export function isPlayerLookingRight(player1, player2) {
+function isPlayerLookingRight(player1, player2) {
     if (player1.position.x < player2.position.x) {
         return true
     } else if (player1.position.x >= player2.position.x) {
@@ -188,7 +201,7 @@ export function isPlayerLookingRight(player1, player2) {
     }
 }
 
-export function determineWinner(player1, player2, timerId) {
+function determineWinner(player1, player2, timerId) {
     clearTimeout(timerId)
     document.querySelector('#displayText').style.display = 'flex'
     if (player1.health === player2.health) {
@@ -200,8 +213,8 @@ export function determineWinner(player1, player2, timerId) {
     }
 }
 
-export let timer = 60
-export let timerId = null
+let timer = 60
+let timerId = null
 
 export function decreaseTimer() {
     if (timer > 0) {
