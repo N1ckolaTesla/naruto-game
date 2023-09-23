@@ -60,6 +60,10 @@ export const personNaruto = {
                 imageSrc: '../assets/imgs/person/naruto-fallOff-right.png',
                 framesMax: 9
             },
+            block: {
+                imageSrc: '../assets/imgs/person/naruto-block-right.png',
+                framesMax: 8
+            },
             death: {
                 imageSrc: '../assets/imgs/person/naruto-death-right.png',
                 framesMax: 3
@@ -109,6 +113,10 @@ export const personNaruto = {
             fallOff: {
                 imageSrc: '../assets/imgs/person/naruto-fallOff-left.png',
                 framesMax: 9
+            },
+            block: {
+                imageSrc: '../assets/imgs/person/naruto-block-left.png',
+                framesMax: 8
             },
             death: {
                 imageSrc: '../assets/imgs/person/naruto-death-left.png',

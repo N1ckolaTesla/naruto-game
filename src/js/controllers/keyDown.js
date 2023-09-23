@@ -33,6 +33,11 @@ export const keyDownListener =  ({keys, player, enemy}) => (e) => {
                 player.attackCountAvailable++
                 player.attack()
                 break
+            case 'e': 
+                keys.e.pressed = true
+                player.lastKey = 'e'
+                player.block()
+                break
         }
     }
     if (!enemy.dead) {
@@ -68,6 +73,11 @@ export const keyDownListener =  ({keys, player, enemy}) => (e) => {
             case 'ArrowDown':
                 enemy.attackCountAvailable++
                 enemy.attack()
+                break
+            case 'l': 
+                keys.l.pressed = true
+                enemy.lastKey = 'l'
+                enemy.block()
                 break
         }
     }

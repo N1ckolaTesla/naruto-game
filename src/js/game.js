@@ -27,6 +27,9 @@ class Game extends GameConstants {
             w: {
                 pressed: false
             },
+            e : {
+                pressed: false
+            },
             ArrowLeft: {
                 pressed: false
             },
@@ -34,6 +37,9 @@ class Game extends GameConstants {
                 pressed: false
             },
             ArrowUp: {
+                pressed: false
+            },
+            l: {
                 pressed: false
             }
         };

@@ -170,6 +170,9 @@ export class Fighter extends Sprite {
             this.switchSprite('takeHit')
         }
     }
+    block() {
+        this.switchSprite('block')
+    }
     switchSprite(sprite) {
         //override all other animations with the attack animation
         if (
@@ -197,6 +200,11 @@ export class Fighter extends Sprite {
         if (
             this.image === this.activeSprites.takeHit.image &&
             this.framesCurrent < this.activeSprites.takeHit.framesMax - 1
+        ) 
+        return
+        if (
+            this.image === this.activeSprites.block.image &&
+            this.framesCurrent < this.activeSprites.block.framesMax - 1
         ) 
         return
         if (this.image === this.activeSprites.death.image) {
@@ -287,6 +295,13 @@ export class Fighter extends Sprite {
                 if (this.image !== this.activeSprites.fallOff.image) {
                     this.image = this.activeSprites.fallOff.image
                     this.framesMax = this.activeSprites.fallOff.framesMax
+                    this.framesCurrent = 0
+                }
+                break
+            case 'block':
+                if (this.image !== this.activeSprites.block.image) {
+                    this.image = this.activeSprites.block.image
+                    this.framesMax = this.activeSprites.block.framesMax
                     this.framesCurrent = 0
                 }
                 break
