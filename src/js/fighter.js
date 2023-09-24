@@ -161,13 +161,18 @@ export class Fighter extends Sprite {
         this.isAttacking = true
     }
     takeHit(hp) {
-        this.health -= hp
-        if (this.health <= 0) {
-            this.switchSprite('death')
-        } else if (hp === 2) {
-            this.switchSprite('fallOff')
-        } else {
-            this.switchSprite('takeHit')
+        if (
+            (this.image !== this.activeSprites.block.image) &&
+            (this.framesCurrent < this.activeSprites.block.framesMax - 1)
+        ) {
+            this.health -= hp
+            if (this.health <= 0) {
+                this.switchSprite('death')
+            } else if (hp === 2) {
+                this.switchSprite('fallOff')
+            } else  if (hp === 1) {
+                this.switchSprite('takeHit')
+            }
         }
     }
     block() {
