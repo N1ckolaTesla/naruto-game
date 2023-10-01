@@ -51,11 +51,11 @@ export class Fighter extends Sprite {
         }
         this.dead = false
         this.attack3Available = false
-        this.readyToRunRight = false,
-        this.readyToRunLeft = false,
-        this.readyToRunRightTimeout,
-        this.readyToRunLeftTimeout,
-        this.isRunningRight = false,
+        this.readyToRunRight = false
+        this.readyToRunLeft = false
+        this.readyToRunRightTimeout
+        this.readyToRunLeftTimeout
+        this.isRunningRight = false
         this.isRunningLeft = false
         this.velocityXFlying = 0
         this.velocityXFlyingLeft = -20
@@ -179,6 +179,14 @@ export class Fighter extends Sprite {
         this.switchSprite('block')
     }
     switchSprite(sprite) {
+        if (
+            (this.image === this.activeSprites.attack1.image &&
+            this.framesCurrent < this.activeSprites.attack1.framesMax - 1) ||
+            (this.image === this.activeSprites.attack2.image &&
+            this.framesCurrent < this.activeSprites.attack2.framesMax - 1)
+        ) {
+            this.velocity.x = 0
+        }
         //override all other animations with the attack animation
         if (
             (this.image === this.activeSprites.attack1.image &&
@@ -210,8 +218,9 @@ export class Fighter extends Sprite {
         if (
             this.image === this.activeSprites.block.image &&
             this.framesCurrent < this.activeSprites.block.framesMax - 1
-        ) 
-        return
+        ) {
+            return
+        }
         if (this.image === this.activeSprites.death.image) {
             if (this.framesCurrent === this.activeSprites.death.framesMax - 1) this.dead = true 
             return

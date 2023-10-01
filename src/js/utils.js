@@ -1,14 +1,3 @@
-export function attackCollision(player1, player2) {
-    return (
-        player1.attackBox.position.x + player1.attackBox.width >= player2.position.x &&
-        player1.attackBox.position.x <= player2.position.x + player2.width &&
-        player1.attackBox.position.y + player1.attackBox.height >= player2.position.y &&
-        player1.attackBox.position.y <= player2.position.y + player2.height &&
-        player1.isAttacking &&
-        player1.framesCurrent === 2
-    )
-}
-
 export function move(player, keys, name) {
     switch (name) {
         case 'naruto': {
@@ -64,44 +53,7 @@ function runRight(player) {
     restrictMoving(player)
 }
 
-export function preventPassingThrough(player1, player2, keys) {
-    if (keys.d.pressed && player1.lastKey === 'd') {
-        if (!checkY(player1, player2)) {
-            if (checkXRight(player1, player2)) {
-                if (!player1.image.src.includes('fallOff')) {
-                    player1.velocity.x = 0
-                }
-            }
-        }
-    } else if (keys.a.pressed && player1.lastKey === 'a') {
-        if (!checkY(player1, player2)) {
-            if (checkXLeft(player1, player2)) {
-                if (!player1.image.src.includes('fallOff')) {
-                    player1.velocity.x = 0
-                }
-            }
-        }
-    }
-    if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
-        if (!checkY(player2, player1)) {
-            if (checkXRight(player2, player1)) {
-                if (!player2.image.src.includes('fallOff')) {
-                    player2.velocity.x = 0
-                }
-            }
-        }
-    } else if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {
-        if (!checkY(player2, player1)) {
-            if (checkXLeft(player2, player1)) {
-                if (!player2.image.src.includes('fallOff')) {
-                    player2.velocity.x = 0
-                }
-            }
-        }
-    }
-}
-
-function checkY(player1, player2) {
+export function checkY(player1, player2) {
     if (
         (player1.position.y + player1.height < player2.position.y) ||
         (player1.position.y > player2.position.y + player2.height)
@@ -112,7 +64,7 @@ function checkY(player1, player2) {
     }
 }
 
-function checkXRight(player1, player2) {
+export function checkXRight(player1, player2) {
     if (
         (player1.position.x + player1.width >= player2.position.x) &&
         (player1.position.x + player1.width < player2.position.x + player2.width)
@@ -123,7 +75,7 @@ function checkXRight(player1, player2) {
     }
 }
 
-function checkXLeft(player1, player2) {
+export function checkXLeft(player1, player2) {
     if (
         (player1.position.x <= player2.position.x + player2.width) &&
         (player1.position.x > player2.position.x)
@@ -153,37 +105,7 @@ export function restrictMoving(player) {
     }
 }
 
-export function playerThrowBack(player1, player2) {
-    if (
-        player1.image === player1.activeSprites.fallOff.image &&
-        player1.framesCurrent < player1.activeSprites.fallOff.framesMax - 1
-    ) {
-        if (isPlayerLookingRight(player1, player2)) {
-            player1.velocityXFlyingLeft += 0.6
-            player1.velocity.x = player1.velocityXFlyingLeft
-        } else {
-            player1.velocityXFlyingRight -= 0.6
-            player1.velocity.x = player1.velocityXFlyingRight           
-        }
-    } else {
-        player1.velocityXFlyingLeft = -22
-        player1.velocityXFlyingRight = 22
-    }
-}
-
-export function playerTakesHit(playerBeaten, playerAttacking, id) {
-    if (playerAttacking.image === playerAttacking.activeSprites.attack1.image ||
-        playerAttacking.image === playerAttacking.activeSprites.attack2.image ||
-        playerAttacking.image === playerAttacking.activeSprites.attackFlying.image) {
-        playerBeaten.takeHit(1);
-    } else if (playerAttacking.image === playerAttacking.activeSprites.attack3.image) {
-        playerBeaten.takeHit(2)
-    }
-    playerAttacking.isAttacking = false;
-    renderHealth(id, playerBeaten.health);
-}
-
-function renderHealth(id , health) {
+export function renderHealth(id, health) {
     const element = document.getElementById(id)
     element.style.width = `${health}%`
 }
@@ -191,14 +113,6 @@ function renderHealth(id , health) {
 export function attackFlying(player) {
     player.isAttacking = true
     player.switchSprite('attackFlying')
-}
-
-function isPlayerLookingRight(player1, player2) {
-    if (player1.position.x < player2.position.x) {
-        return true
-    } else if (player1.position.x >= player2.position.x) {
-        return false
-    }
 }
 
 function determineWinner(player1, player2, timerId) {

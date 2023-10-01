@@ -1,11 +1,12 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, attackCollision, move, playerTakesHit, playerThrowBack, preventPassingThrough, endGame } from "./utils";
+import { decreaseTimer, move, endGame } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
 import { keyDownListener } from "./controllers/keyDown";
 import { keyUpListener } from "./controllers/keyUp";
+import { Interaction } from "./interaction";
 
 const gameConstants = new GameConstants();
 
@@ -43,6 +44,7 @@ class Game extends GameConstants {
                 pressed: false
             }
         };
+        this.interaction = new Interaction(this.player1, this.player2, this.keys)
         document.addEventListener('keydown', keyDownListener({keys: this.keys, enemy: this.player2, player: this.player1})); 
         document.addEventListener('keyup', keyUpListener({keys: this.keys, enemy: this.player2, player: this.player1})); 
     }
@@ -71,25 +73,25 @@ class Game extends GameConstants {
         this.player1.turnFighters(this.player1, this.player2)
 
         // Detect for collision & this.player2 gets hit
-        if (attackCollision(this.player1, this.player2)) {
-            playerTakesHit(this.player2, this.player1, 'enemyHealth')
+        if (this.interaction.attackCollision(this.player1, this.player2)) {
+            this.interaction.playerTakesHit(this.player2, this.player1, 'enemyHealth')
         } else if (this.player1.isAttacking && this.player1.framesCurrent === 2) { //If this.player1 misses
             this.player1.isAttacking = false;
         }
 
         // Detect for collison & this.player1 gets hit
-        if (attackCollision(this.player2, this.player1)) {
-            playerTakesHit(this.player1, this.player2, 'playerHealth')
+        if (this.interaction.attackCollision(this.player2, this.player1)) {
+            this.interaction.playerTakesHit(this.player1, this.player2, 'playerHealth')
         } else if (this.player2.isAttacking && this.player2.framesCurrent === 2) { // If this.player2 misses
             this.player2.isAttacking = false;
         }
 
         // Throw persons back
-        playerThrowBack(this.player1, this.player2)
-        playerThrowBack(this.player2, this.player1)
+        this.interaction.playerThrowBack(this.player1, this.player2)
+        this.interaction.playerThrowBack(this.player2, this.player1)
 
         //Prevent passing one player through another
-        preventPassingThrough(this.player1, this.player2, this.keys)
+        this.interaction.preventPassingThrough(this.player1, this.player2, this.keys)
 
         // End game based on health
         endGame(this.player1, this.player2)
