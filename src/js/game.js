@@ -8,8 +8,6 @@ import { keyDownListener } from "./controllers/keyDown";
 import { keyUpListener } from "./controllers/keyUp";
 import { Interaction } from "./interaction";
 
-const gameConstants = new GameConstants();
-
 class Game extends GameConstants {
     constructor() {
         super();
@@ -49,12 +47,12 @@ class Game extends GameConstants {
     }
 
     animate() {
-        gameConstants.ctx.fillStyle = 'black';
-        gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight);
+        this.ctx.fillStyle = 'black';
+        this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
         gameObjects.forEach(sprite => sprite.update());
-        gameConstants.ctx.fillStyle = 'rgba(255, 255, 255, .15)';
-        gameConstants.ctx.fillRect(0, 0, gameConstants.canvasWidth, gameConstants.canvasHeight);
+        this.ctx.fillStyle = 'rgba(255, 255, 255, .15)';
+        this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
         this.player1.update();
         this.player2.update();
