@@ -1,5 +1,5 @@
 import { GameConstants } from "./gameConstants";
-import { checkY, checkXLeft, checkXRight, renderHealth } from "./utils";
+import { renderHealth } from "./utils";
 
 export class Interaction extends GameConstants {
     constructor(player1, player2, keys) {
@@ -10,7 +10,54 @@ export class Interaction extends GameConstants {
         this.timer = 60
         this.timerId = null
         this.decreaseTimer()
-    
+    }
+
+    turnFighters() {
+        if (this.player1.position.x >= this.player2.position.x) {
+            if (this.player1.velocity.x <= 0 && !this.player1.dead) {
+                this.player1.activeSprites = this.player1.sprites.left
+            } else if (this.player1.velocity.x > 0 && !this.player1.dead) {
+                this.player1.activeSprites = this.player1.sprites.right
+            }
+            if (this.player2.velocity.x < 0 && !this.player2.dead) {
+                this.player2.activeSprites = this.player2.sprites.left
+            } else if (this.player2.velocity.x >= 0 && !this.player2.dead) {
+                this.player2.activeSprites = this.player2.sprites.right
+            }
+            //setting the attackBox
+            this.player1.attackBox.offset.x = -5
+            this.player2.attackBox.offset.x = 80
+        } else if (this.player1.position.x < this.player2.position.x) {
+            if (this.player2.velocity.x <= 0 && !this.player2.dead) {
+                this.player2.activeSprites = this.player2.sprites.left
+            } else if (this.player2.velocity.x > 0 && !this.player2.dead) {
+                this.player2.activeSprites = this.player2.sprites.right
+            }
+            if (this.player1.velocity.x < 0 && !this.player1.dead) {
+                this.player1.activeSprites = this.player1.sprites.left
+            } else if (this.player1.velocity.x >= 0 && !this.player1.dead) {
+                this.player1.activeSprites = this.player1.sprites.right
+            }
+            //setting the attackBox
+            this.player1.attackBox.offset.x = 80
+            this.player2.attackBox.offset.x = -5
+        }
+    }
+
+    detectCollision() {
+        // Detect for collision & this.player2 gets hit
+        if (this.attackCollision(this.player1, this.player2)) {
+            this.playerTakesHit(this.player2, this.player1, 'enemyHealth')
+        } else if (this.player1.isAttacking && this.player1.framesCurrent === 2) { //If this.player1 misses
+            this.player1.isAttacking = false;
+        }
+
+        // Detect for collison & this.player1 gets hit
+        if (this.attackCollision(this.player2, this.player1)) {
+            this.playerTakesHit(this.player1, this.player2, 'playerHealth')
+        } else if (this.player2.isAttacking && this.player2.framesCurrent === 2) { // If this.player2 misses
+            this.player2.isAttacking = false;
+        }
     }
 
     attackCollision(player1, player2) {
@@ -26,16 +73,16 @@ export class Interaction extends GameConstants {
 
     preventPassingThrough(player1, player2, keys) {
         if (keys.d.pressed && player1.lastKey === 'd') {
-            if (!checkY(player1, player2)) {
-                if (checkXRight(player1, player2)) {
+            if (!this.checkY(player1, player2)) {
+                if (this.checkXRight(player1, player2)) {
                     if (!player1.image.src.includes('fallOff')) {
                         player1.velocity.x = 0
                     }
                 }
             }
         } else if (keys.a.pressed && player1.lastKey === 'a') {
-            if (!checkY(player1, player2)) {
-                if (checkXLeft(player1, player2)) {
+            if (!this.checkY(player1, player2)) {
+                if (this.checkXLeft(player1, player2)) {
                     if (!player1.image.src.includes('fallOff')) {
                         player1.velocity.x = 0
                     }
@@ -43,16 +90,16 @@ export class Interaction extends GameConstants {
             }
         }
         if (keys.ArrowRight.pressed && player2.lastKey === 'ArrowRight') {
-            if (!checkY(player2, player1)) {
-                if (checkXRight(player2, player1)) {
+            if (!this.checkY(player2, player1)) {
+                if (this.checkXRight(player2, player1)) {
                     if (!player2.image.src.includes('fallOff')) {
                         player2.velocity.x = 0
                     }
                 }
             }
         } else if (keys.ArrowLeft.pressed && player2.lastKey === 'ArrowLeft') {
-            if (!checkY(player2, player1)) {
-                if (checkXLeft(player2, player1)) {
+            if (!this.checkY(player2, player1)) {
+                if (this.checkXLeft(player2, player1)) {
                     if (!player2.image.src.includes('fallOff')) {
                         player2.velocity.x = 0
                     }
@@ -97,6 +144,39 @@ export class Interaction extends GameConstants {
         }
         playerAttacking.isAttacking = false;
         renderHealth(id, playerBeaten.health);
+    }
+
+    checkY(player1, player2) {
+        if (
+            (player1.position.y + player1.height < player2.position.y) ||
+            (player1.position.y > player2.position.y + player2.height)
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    checkXRight(player1, player2) {
+        if (
+            (player1.position.x + player1.width >= player2.position.x) &&
+            (player1.position.x + player1.width < player2.position.x + player2.width)
+        ) {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    checkXLeft(player1, player2) {
+        if (
+            (player1.position.x <= player2.position.x + player2.width) &&
+            (player1.position.x > player2.position.x)
+        ) {
+            return true
+        } else {
+            return false
+        }
     }
 
     determineWinner() {

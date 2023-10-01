@@ -62,34 +62,13 @@ class Game extends GameConstants {
         this.player1.velocity.x = 0;
         this.player2.velocity.x = 0;
 
-        // this.player1 movement
         move(this.player1, this.keys, 'naruto')
-
-        // this.player2 movement
         move(this.player2, this.keys, 'sasuke')
 
-        // turn fighters
-        this.player1.turnFighters(this.player1, this.player2)
-
-        // Detect for collision & this.player2 gets hit
-        if (this.interaction.attackCollision(this.player1, this.player2)) {
-            this.interaction.playerTakesHit(this.player2, this.player1, 'enemyHealth')
-        } else if (this.player1.isAttacking && this.player1.framesCurrent === 2) { //If this.player1 misses
-            this.player1.isAttacking = false;
-        }
-
-        // Detect for collison & this.player1 gets hit
-        if (this.interaction.attackCollision(this.player2, this.player1)) {
-            this.interaction.playerTakesHit(this.player1, this.player2, 'playerHealth')
-        } else if (this.player2.isAttacking && this.player2.framesCurrent === 2) { // If this.player2 misses
-            this.player2.isAttacking = false;
-        }
-
-        // Throw persons back
+        this.interaction.turnFighters()
+        this.interaction.detectCollision()
         this.interaction.playerThrowBack(this.player1, this.player2)
         this.interaction.playerThrowBack(this.player2, this.player1)
-
-        //Prevent passing one player through another
         this.interaction.preventPassingThrough(this.player1, this.player2, this.keys)
 
         requestAnimationFrame(this.animate.bind(this)); // Use bind(this) to maintain the correct context

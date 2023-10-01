@@ -53,39 +53,6 @@ function runRight(player) {
     restrictMoving(player)
 }
 
-export function checkY(player1, player2) {
-    if (
-        (player1.position.y + player1.height < player2.position.y) ||
-        (player1.position.y > player2.position.y + player2.height)
-    ) {
-        return true
-    } else {
-        return false
-    }
-}
-
-export function checkXRight(player1, player2) {
-    if (
-        (player1.position.x + player1.width >= player2.position.x) &&
-        (player1.position.x + player1.width < player2.position.x + player2.width)
-    ) {
-        return true
-    } else {
-        return false
-    }
-}
-
-export function checkXLeft(player1, player2) {
-    if (
-        (player1.position.x <= player2.position.x + player2.width) &&
-        (player1.position.x > player2.position.x)
-    ) {
-        return true
-    } else {
-        return false
-    }
-}
-
 function jump(player) {
     if (player.velocity.y < 0) {
         player.velocity.x = player.velocityXFlying;
