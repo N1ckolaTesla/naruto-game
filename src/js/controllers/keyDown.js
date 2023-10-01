@@ -1,4 +1,4 @@
-export const keyDownListener =  ({keys, player, enemy}) => (e) => {
+export const keyDownListener = ({keys, player, enemy}) => (e) => {
     if (!player.dead) {
         switch (e.key) {
             case 'd':

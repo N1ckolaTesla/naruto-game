@@ -12,6 +12,5 @@ export class GameConstants {
         this.canvasHeight = 576
         this.canvasWidth = 1024
         this.gravity = 0.7
-
     }
 }

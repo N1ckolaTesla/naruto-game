@@ -47,11 +47,8 @@ class Game extends GameConstants {
     }
 
     animate() {
-        this.ctx.fillStyle = 'black';
-        this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
-
         gameObjects.forEach(sprite => sprite.update());
-        this.ctx.fillStyle = 'rgba(255, 255, 255, .15)';
+        this.ctx.fillStyle = 'rgba(255, 255, 255, .05)';
         this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
 
         this.player1.update();
@@ -80,7 +77,7 @@ class Game extends GameConstants {
 let game;
 
 const newGame = () => {
-    if(game){
+    if (game) {
         game.removeListeners()
     }
     game = new Game();
