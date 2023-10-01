@@ -1,6 +1,6 @@
 import { GameConstants } from "./gameConstants";
 import { Fighter } from "./fighter";
-import { decreaseTimer, move, endGame } from "./utils";
+import { move } from "./utils";
 import { gameObjects } from "./sprites/gameObjects";
 import { personNaruto } from "./persons/naruto";
 import { personSasuke } from "./persons/sasuke";
@@ -13,7 +13,6 @@ const gameConstants = new GameConstants();
 class Game extends GameConstants {
     constructor() {
         super();
-        decreaseTimer();
         this.player1 = new Fighter(personNaruto);
         this.player2 = new Fighter(personSasuke);
         this.player1.draw();
@@ -92,9 +91,6 @@ class Game extends GameConstants {
 
         //Prevent passing one player through another
         this.interaction.preventPassingThrough(this.player1, this.player2, this.keys)
-
-        // End game based on health
-        endGame(this.player1, this.player2)
 
         requestAnimationFrame(this.animate.bind(this)); // Use bind(this) to maintain the correct context
     }

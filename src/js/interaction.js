@@ -7,6 +7,10 @@ export class Interaction extends GameConstants {
         this.player1 = player1
         this.player2 = player2
         this.keys = keys
+        this.timer = 60
+        this.timerId = null
+        this.decreaseTimer()
+    
     }
 
     attackCollision(player1, player2) {
@@ -95,15 +99,39 @@ export class Interaction extends GameConstants {
         renderHealth(id, playerBeaten.health);
     }
 
-    determineWinner(player1, player2, timerId) {
-        clearTimeout(timerId)
+    determineWinner() {
+        clearTimeout(this.timerId)
         document.querySelector('#displayText').style.display = 'flex'
-        if (player1.health === player2.health) {
+        if (this.player1.health === this.player2.health) {
             document.querySelector('#displayText').innerHTML = 'Tie'
-        } else if (player1.health > player2.health) {
+        } else if (this.player1.health > this.player2.health) {
             document.querySelector('#displayText').innerHTML = 'Player wins'
-        } else if (player1.health < player2.health) {
+        } else if (this.player1.health < this.player2.health) {
             document.querySelector('#displayText').innerHTML = 'Enemy wins'
+        }
+    }
+    
+    decreaseTimer() {
+        if (this.timer > 0) {
+            this.timerId = setTimeout(this.decreaseTimer.bind(this), 1000)
+            this.timer--
+            document.getElementById('timer').innerHTML = this.timer
+        }
+    
+        if (this.timer === 0) {
+            document.querySelector('#displayText').style.display = 'flex'
+            this.endGame()
+        }
+    }
+    
+    endGame() {
+        if (this.player1.health <= 0 || this.player2.health <= 0) {
+            this.determineWinner();
+            if (this.player1.health <= 0) {
+                this.player1.switchSprite('death');
+            } else if (player2.health <= 0) {
+                this.player2.switchSprite('death');
+            }
         }
     }
 }
